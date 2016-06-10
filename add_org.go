@@ -1,6 +1,6 @@
 package client
 
-type AddOrgsToClusterReq struct {
+type AddOwnersReq struct {
 	Owners []OwnerReq `json:"owners"`
 }
 
@@ -10,6 +10,6 @@ type OwnerReq struct {
 }
 
 // TODO
-func (c *Client) AddOrgsToCluster(clusterID string, request AddOrgsToClusterReq) error {
+func (c *Client) AddOwnersToCluster(clusterID string, request AddOwnersReq) error {
 	return nil
 }

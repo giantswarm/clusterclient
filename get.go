@@ -4,12 +4,12 @@ import (
 	"time"
 )
 
-type GetClusterByIDResp struct {
+type ClusterResp struct {
 	APIEndpoint     string               `json:"api_endpoint"`
 	CreateDate      time.Time            `json:"create_date"`
 	ID              string               `json:"id"`
 	Name            string               `json:"name"`
-	ServiceAccounts []ServiceAccountResp `json:"service_accounts"` // TODO make PR in mock-api
+	ServiceAccounts []ServiceAccountResp `json:"service_accounts"`
 }
 
 type ServiceAccountResp struct {
@@ -19,6 +19,6 @@ type ServiceAccountResp struct {
 }
 
 // TODO
-func (c *Client) GetClusterByID(clusterID string) (GetClusterByIDResp, error) {
-	return GetClusterByIDResp{}, nil
+func (c *Client) GetClusterByID(clusterID string) (ClusterResp, error) {
+	return ClusterResp{}, nil
 }

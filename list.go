@@ -4,17 +4,17 @@ import (
 	"time"
 )
 
-type ListClustersForOrgResp struct {
-	Clusters []ListClusterReq `json:"clusters"`
+type ClusterListResp struct {
+	Clusters []ClusterItemResp `json:"clusters"`
 }
 
-type ListClusterReq struct {
+type ClusterItemResp struct {
 	CreateDate time.Time `json:"create_date"`
 	ID         string    `json:"id"`
 	Name       string    `json:"name"`
 }
 
 // TODO
-func (c *Client) ListClustersForOrg(orgName string) (ListClustersForOrgResp, error) {
-	return ListClustersForOrgResp{}, nil
+func (c *Client) ListClustersForOrg(orgID string) (ClusterListResp, error) {
+	return ClusterListResp{}, nil
 }

@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type V3CreateClusterReq struct {
+type ClusterReq struct {
 	APIEndpoint     string              `json:"api_endpoint"`
 	CreateDate      time.Time           `json:"create_date"`
 	ID              string              `json:"id"`
@@ -19,6 +19,6 @@ type ServiceAccountReq struct {
 }
 
 // TODO
-func (c *Client) V3CreateCluster(request V3CreateClusterReq) error {
+func (c *Client) CreateCluster(request ClusterReq) error {
 	return nil
 }

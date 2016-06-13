@@ -14,6 +14,13 @@ SOURCE=$(shell find . -name '*.go')
 
 BIN := $(PROJECT)
 
+ifndef GOOS
+	GOOS := $(shell go env GOOS)
+endif
+ifndef GOARCH
+	GOARCH := $(shell go env GOARCH)
+endif
+
 all: .gobuild get-deps $(BIN)
 
 get-deps: .gobuild
@@ -23,8 +30,17 @@ get-deps: .gobuild
 	mkdir -p $(PROJECT_PATH)
 	cd "$(PROJECT_PATH)" && ln -s ../../../.. $(PROJECT)
 
-$(BIN): $(SOURCE) VERSION
-	GOPATH=$(GOPATH) go build -a -ldflags "-X main.projectVersion $(VERSION) -X main.projectBuild $(COMMIT)" -o $(BIN)
+$(BIN): VERSION $(SOURCE)
+	echo Building for $(GOOS)/$(GOARCH)
+	docker run \
+	    --rm \
+	    -v $(shell pwd):/usr/code \
+	    -e GOPATH=/usr/code/.gobuild \
+	    -e GOOS=$(GOOS) \
+	    -e GOARCH=$(GOARCH) \
+	    -w /usr/code \
+	    golang:1.6 \
+	    go build -a -ldflags "-X main.projectVersion=$(VERSION) -X main.projectBuild=$(COMMIT)" -o $(BIN)
 
 clean:
 	rm -rf $(BUILD_PATH) $(BIN)

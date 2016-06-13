@@ -2,6 +2,8 @@ package client
 
 import (
 	"time"
+
+	"github.com/giantswarm/api-schema"
 )
 
 type ClusterReq struct {
@@ -18,7 +20,16 @@ type ServiceAccountReq struct {
 	Name                  string `json:"name"`
 }
 
-// TODO
 func (c *Client) CreateCluster(request ClusterReq) error {
+	resp, err := apischema.FromHTTPResponse(c.postJSON("/v1/cluster", request))
+	if err != nil {
+		return maskAny(err)
+	}
+
+	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_RESOURCE_CREATED); err != nil {
+		// TODO
+		return maskAny(err)
+	}
+
 	return nil
 }

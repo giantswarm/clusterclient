@@ -1,7 +1,10 @@
 package client
 
 import (
+	"fmt"
 	"time"
+
+	"github.com/giantswarm/api-schema"
 )
 
 type ClusterResp struct {
@@ -18,7 +21,22 @@ type ServiceAccountResp struct {
 	Name                  string `json:"name"`
 }
 
-// TODO
 func (c *Client) GetClusterByID(clusterID string) (ClusterResp, error) {
-	return ClusterResp{}, nil
+	resp, err := apischema.FromHTTPResponse(c.get(fmt.Sprintf("/v1/cluster/%s", clusterID)))
+	if err != nil {
+		return ClusterResp{}, maskAny(err)
+	}
+
+	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
+		// TODO
+		return ClusterResp{}, maskAny(err)
+	}
+
+	var response ClusterResp
+
+	if err := resp.UnmarshalData(&response); err != nil {
+		return ClusterResp{}, maskAny(err)
+	}
+
+	return response, nil
 }

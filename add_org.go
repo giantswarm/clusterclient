@@ -22,8 +22,7 @@ func (c *Client) AddOwnersToCluster(clusterID string, request AddOwnersReq) erro
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_RESOURCE_CREATED); err != nil {
-		// TODO
-		return maskAny(err)
+		return mapError(err)
 	}
 
 	return nil

@@ -27,8 +27,7 @@ func (c *Client) CreateCluster(request ClusterReq) error {
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_RESOURCE_CREATED); err != nil {
-		// TODO
-		return maskAny(err)
+		return mapError(err)
 	}
 
 	return nil

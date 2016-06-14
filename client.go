@@ -23,12 +23,17 @@ type Client struct {
 	Config
 }
 
-func New(config Config) *Client {
+func New(config Config) (*Client, error) {
 	c := &Client{
 		Config: config,
 	}
 
-	return c
+	_, err := url.Parse(c.Endpoint)
+	if err != nil {
+		return nil, errgo.NoteMask(err, fmt.Sprintf("parsing endpoint failed", c.Endpoint), errgo.Any)
+	}
+
+	return c, nil
 }
 
 func (c *Client) get(path string) (*http.Response, error) {

@@ -80,7 +80,7 @@ func (c *Client) request(method, path string, headers map[string]string, body io
 		req.Header.Add(k, v)
 	}
 
-	if c.User != "" && c.Password != "" {
+	if c.User != "" || c.Password != "" {
 		req.SetBasicAuth(c.User, c.Password)
 	}
 

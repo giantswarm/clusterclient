@@ -7,11 +7,12 @@ import (
 )
 
 type ClusterReq struct {
-	APIEndpoint     string              `json:"api_endpoint"`
-	CreateDate      time.Time           `json:"create_date"`
-	ID              string              `json:"id"`
-	Name            string              `json:"name"`
-	ServiceAccounts []ServiceAccountReq `json:"service_accounts"`
+	APIEndpoint              string              `json:"api_endpoint"`
+	CertificateAuthorityData string              `json:"certificate_authority_data"`
+	CreateDate               time.Time           `json:"create_date"`
+	ID                       string              `json:"id"`
+	Name                     string              `json:"name"`
+	ServiceAccounts          []ServiceAccountReq `json:"service_accounts"`
 }
 
 type ServiceAccountReq struct {
@@ -20,15 +21,25 @@ type ServiceAccountReq struct {
 	Name                  string `json:"name"`
 }
 
-func (c *Client) CreateCluster(request ClusterReq) error {
+type CreateClusterResp struct {
+	ID string `json:"id"`
+}
+
+func (c *Client) CreateCluster(request ClusterReq) (CreateClusterResp, error) {
 	resp, err := apischema.FromHTTPResponse(c.postJSON("/v1/cluster", request))
 	if err != nil {
-		return maskAny(err)
+		return CreateClusterResp{}, maskAny(err)
 	}
 
-	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_RESOURCE_CREATED); err != nil {
-		return mapError(err)
+	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
+		return CreateClusterResp{}, mapError(err)
 	}
 
-	return nil
+	var createResp CreateClusterResp
+
+	if err := resp.UnmarshalData(&createResp); err != nil {
+		return CreateClusterResp{}, maskAny(err)
+	}
+
+	return createResp, nil
 }

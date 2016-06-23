@@ -8,11 +8,12 @@ import (
 )
 
 type ClusterResp struct {
-	APIEndpoint     string               `json:"api_endpoint"`
-	CreateDate      time.Time            `json:"create_date"`
-	ID              string               `json:"id"`
-	Name            string               `json:"name"`
-	ServiceAccounts []ServiceAccountResp `json:"service_accounts"`
+	APIEndpoint              string               `json:"api_endpoint"`
+	CertificateAuthorityData string               `json:"certificate_authority_data"`
+	CreateDate               time.Time            `json:"create_date"`
+	ID                       string               `json:"id"`
+	Name                     string               `json:"name"`
+	ServiceAccounts          []ServiceAccountResp `json:"service_accounts"`
 }
 
 type ServiceAccountResp struct {

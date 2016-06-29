@@ -2,7 +2,6 @@ package client
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/giantswarm/api-schema"
 )
@@ -38,7 +37,7 @@ func (c *Client) GetOrCreateCAKeyPair(clusterID string, request CAKeyPairRequest
 		return KeyPairResponse{}, mapError(err)
 	}
 
-	var response KeyPairResp
+	var response KeyPairResponse
 
 	if err := resp.UnmarshalData(&response); err != nil {
 		return KeyPairResponse{}, maskAny(err)
@@ -70,7 +69,7 @@ func (c *Client) GetOrCreateSignedKeyPair(clusterID, certName string, request Si
 		return KeyPairResponse{}, mapError(err)
 	}
 
-	var response KeyPairResp
+	var response KeyPairResponse
 
 	if err := resp.UnmarshalData(&response); err != nil {
 		return KeyPairResponse{}, maskAny(err)

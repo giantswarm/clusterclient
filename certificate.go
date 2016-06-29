@@ -60,7 +60,7 @@ type SignedKeyPairRequest struct {
 }
 
 func (c *Client) GetOrCreateSignedKeyPair(clusterID, certName string, request SignedKeyPairRequest) (KeyPairResponse, error) {
-	resp, err := apischema.FromHTTPResponse(c.postJSON(fmt.Sprintf("/v1/cluster/%s/certificate/key-pair/%s", clusterID, certName), request))
+	resp, err := apischema.FromHTTPResponse(c.postJSON(fmt.Sprintf("/v1/cluster/%s/certificate/key-pair/signed/%s", clusterID, certName), request))
 	if err != nil {
 		return KeyPairResponse{}, maskAny(err)
 	}

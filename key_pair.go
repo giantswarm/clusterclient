@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/giantswarm/api-schema"
 )
@@ -11,10 +12,12 @@ type CreateKeyPairRequest struct {
 }
 
 type CreateKeyPairResponse struct {
-	CertificateAuthorityData string `json:"certificate_authority_data"`
-	ClientKeyData            string `json:"client_key_data"`
-	ClientCertificateData    string `json:"client_certificate_data"`
-	SerialNumber             string `json:"serial_number"`
+	CertificateAuthorityData string    `json:"certificate_authority_data"`
+	ClientKeyData            string    `json:"client_key_data"`
+	ClientCertificateData    string    `json:"client_certificate_data"`
+	CreateDate               time.Time `json:"create_date"`
+	Description              string    `json:"description"`
+	SerialNumber             string    `json:"serial_number"`
 }
 
 func (c *Client) CreateClusterKeyPair(clusterID string, request CreateKeyPairRequest) (CreateKeyPairResponse, error) {

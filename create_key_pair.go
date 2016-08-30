@@ -9,7 +9,7 @@ import (
 
 type CreateKeyPairRequest struct {
 	Description string `json:"description"`
-	TTL         string `json:"TTL"`
+	TTL         int    `json:"TTL"`
 }
 
 type CreateKeyPairResponse struct {
@@ -19,7 +19,7 @@ type CreateKeyPairResponse struct {
 	CreateDate               time.Time `json:"create_date"`
 	Description              string    `json:"description"`
 	SerialNumber             string    `json:"serial_number"`
-	TTL                      string    `json:"TTL"`
+	TTL                      int       `json:"TTL"`
 }
 
 func (c *Client) CreateClusterKeyPair(clusterID string, request CreateKeyPairRequest) (CreateKeyPairResponse, error) {

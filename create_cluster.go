@@ -24,7 +24,7 @@ func (c *Client) CreateCluster(request ClusterReq) (CreateClusterResp, error) {
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
-		return CreateClusterResp{}, mapError(err)
+		return CreateClusterResp{}, mapErrors(err)
 	}
 
 	var createResp CreateClusterResp

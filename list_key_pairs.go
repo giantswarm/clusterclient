@@ -33,7 +33,7 @@ func (c *Client) ListKeyPairs(clusterID string) (ListKeyPairsResponse, error) {
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
-		return ListKeyPairsResponse{}, mapError(err)
+		return ListKeyPairsResponse{}, mapErrors(err)
 	}
 
 	var response ListKeyPairsResponse

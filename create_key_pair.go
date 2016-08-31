@@ -29,7 +29,7 @@ func (c *Client) CreateClusterKeyPair(clusterID string, request CreateKeyPairReq
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
-		return CreateKeyPairResponse{}, mapError(maskAny(err))
+		return CreateKeyPairResponse{}, mapErrors(err)
 	}
 
 	var response CreateKeyPairResponse

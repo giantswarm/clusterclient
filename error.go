@@ -23,7 +23,7 @@ func maskAnyf(err error, f string, v ...interface{}) error {
 	return newErr
 }
 
-func mapError(err error) error {
+func mapErrors(err error) error {
 	if apischema.IsResourceAlreadyExistsError(err) {
 		return maskAny(AlreadyExistsError)
 	}

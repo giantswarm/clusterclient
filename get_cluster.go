@@ -21,7 +21,7 @@ func (c *Client) GetClusterByID(clusterID string) (ClusterResp, error) {
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
-		return ClusterResp{}, mapError(err)
+		return ClusterResp{}, mapErrors(err)
 	}
 
 	var response ClusterResp

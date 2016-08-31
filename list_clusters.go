@@ -24,7 +24,7 @@ func (c *Client) ListClustersForOrg(orgID string) (ClusterListResp, error) {
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
-		return ClusterListResp{}, mapError(err)
+		return ClusterListResp{}, mapErrors(err)
 	}
 
 	var response ClusterListResp

@@ -9,6 +9,7 @@ import (
 
 type CreateKeyPairRequest struct {
 	Description string `json:"description"`
+	TTL         int    `json:"TTL"`
 }
 
 type CreateKeyPairResponse struct {
@@ -18,6 +19,7 @@ type CreateKeyPairResponse struct {
 	CreateDate               time.Time `json:"create_date"`
 	Description              string    `json:"description"`
 	SerialNumber             string    `json:"serial_number"`
+	TTL                      int       `json:"TTL"`
 }
 
 func (c *Client) CreateClusterKeyPair(clusterID string, request CreateKeyPairRequest) (CreateKeyPairResponse, error) {
@@ -27,7 +29,7 @@ func (c *Client) CreateClusterKeyPair(clusterID string, request CreateKeyPairReq
 	}
 
 	if err := resp.EnsureStatusCodes(apischema.STATUS_CODE_DATA); err != nil {
-		return CreateKeyPairResponse{}, mapError(maskAny(err))
+		return CreateKeyPairResponse{}, mapErrors(err)
 	}
 
 	var response CreateKeyPairResponse

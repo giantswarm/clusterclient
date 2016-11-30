@@ -3,7 +3,7 @@ package client
 import (
 	"time"
 
-	"github.com/giantswarm/api-schema"
+	apischema "github.com/giantswarm/api-schema"
 )
 
 type ClusterReq struct {

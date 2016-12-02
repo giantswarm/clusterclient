@@ -1,9 +1,8 @@
-package client
+package clusterclient
 
 import (
 	"fmt"
 
-	"github.com/giantswarm/api-schema"
 	"github.com/juju/errgo"
 )
 
@@ -23,25 +22,9 @@ func maskAnyf(err error, f string, v ...interface{}) error {
 	return newErr
 }
 
-func mapErrors(err error) error {
-	if apischema.IsResourceAlreadyExistsError(err) {
-		return maskAny(AlreadyExistsError)
-	}
-	if apischema.IsResourceNotFoundError(err) {
-		return maskAny(NotFoundError)
-	}
+var invalidConfigError = errgo.New("invalid config")
 
-	return maskAny(err)
-}
-
-var AlreadyExistsError = errgo.New("already exists")
-
-func IsAlreadyExists(err error) bool {
-	return errgo.Cause(err) == AlreadyExistsError
-}
-
-var NotFoundError = errgo.New("not found")
-
-func IsNotFound(err error) bool {
-	return errgo.Cause(err) == NotFoundError
+// IsInvalidConfig asserts invalidConfigError.
+func IsInvalidConfig(err error) bool {
+	return errgo.Cause(err) == invalidConfigError
 }

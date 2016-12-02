@@ -1,0 +1,5 @@
+package: github.com/giantswarm/clusterclient
+import:
+- package: github.com/go-resty/resty
+  version: ~0.9.0
+- package: github.com/juju/errgo

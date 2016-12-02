@@ -10,7 +10,7 @@ import (
 const (
 	// Endpoint is the API endpoint of the service this client action interacts
 	// with.
-	Endpoint = "/v1/cluster/%s/key-pairs/"
+	Endpoint = "/v1/clusters/%s/key-pairs/"
 )
 
 // Config represents the configuration used to create a lister service.

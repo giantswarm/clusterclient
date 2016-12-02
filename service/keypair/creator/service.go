@@ -10,7 +10,7 @@ import (
 const (
 	// Endpoint is the API endpoint of the service this client action interacts
 	// with.
-	Endpoint = "/v1/cluster/%s/key-pair/"
+	Endpoint = "/v1/clusters/%s/key-pair/"
 )
 
 // Config represents the configuration used to create a creator service.

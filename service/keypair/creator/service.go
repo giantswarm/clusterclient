@@ -70,9 +70,11 @@ func (s *Service) Create(request Request) (*Response, error) {
 		return nil, maskAny(err)
 	}
 
-	if r.StatusCode() != 201 {
+	if r.StatusCode() != 200 {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 
-	return DefaultResponse(), nil
+	response := r.Result().(*Response)
+
+	return response, nil
 }

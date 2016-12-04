@@ -59,7 +59,7 @@ type Service struct {
 	Config
 }
 
-func (s *Service) List(request Request) (*Response, error) {
+func (s *Service) Search(request Request) (*Response, error) {
 	u, err := s.URL.Parse(fmt.Sprintf(Endpoint, request.Cluster.ID))
 	if err != nil {
 		return nil, maskAny(err)

@@ -16,11 +16,6 @@ type Response struct {
 }
 
 // DefaultResponse provides a default response by best effort.
-func DefaultResponse() *Response {
-	return &Response{
-		CreateDate:   time.Time{},
-		Description:  "",
-		SerialNumber: "",
-		TTL:          0,
-	}
+func DefaultResponse() []*Response {
+	return []*Response{}
 }

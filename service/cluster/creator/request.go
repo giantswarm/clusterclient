@@ -1,17 +1,38 @@
 package creator
 
-import "github.com/giantswarm/clusterclient/service/cluster/creator/config"
+import (
+	"time"
 
-// Request is the configuration for the service action.
+	"github.com/giantswarm/clusterclient/service/cluster/creator/config"
+)
+
 type Request struct {
-	Cluster  *config.Cluster  `json:"cluster"`
-	Customer *config.Customer `json:"customer"`
+	APIEndpoint string    `json:"api_endpoint"`
+	CreateDate  time.Time `json:"create_date"`
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+
+	Owner string `json:"owner"`
+
+	KubernetesVersion string `json:"kubernetes_version"`
+
+	Masters []*config.Master `json:"masters"`
+	Workers []*config.Worker `json:"workers"`
 }
 
-// DefaultRequest provides a default request by best effort.
+// DefaultRequest provides a default request object by best effort.
 func DefaultRequest() Request {
 	return Request{
-		Cluster:  config.DefaultCluster(),
-		Customer: config.DefaultCustomer(),
+		APIEndpoint: "",
+		CreateDate:  time.Time{},
+		ID:          "",
+		Name:        "",
+
+		Owner: "",
+
+		KubernetesVersion: "",
+
+		Masters: []*config.Master{},
+		Workers: []*config.Worker{},
 	}
 }

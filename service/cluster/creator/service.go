@@ -74,7 +74,5 @@ func (s *Service) Create(request Request) (*Response, error) {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 
-	response := r.Result().(*Response)
-
-	return response, nil
+	return DefaultResponse(), nil
 }

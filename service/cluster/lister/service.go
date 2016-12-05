@@ -74,7 +74,7 @@ func (s *Service) List(request Request) ([]*Response, error) {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 
-	response := r.Result().([]*Response)
+	response := *(r.Result().(*[]*Response))
 
 	return response, nil
 }

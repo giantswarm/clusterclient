@@ -7,17 +7,17 @@ import (
 )
 
 type Request struct {
-	APIEndpoint string    `json:"api_endpoint"`
-	CreateDate  time.Time `json:"create_date"`
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
+	APIEndpoint string    `json:"api_endpoint,omitempty"`
+	CreateDate  time.Time `json:"create_date,omitempty"`
+	ID          string    `json:"id,omitempty"`
+	Name        string    `json:"name,omitempty"`
 
-	Owner string `json:"owner"`
+	Owner string `json:"owner,omitempty"`
 
-	KubernetesVersion string `json:"kubernetes_version"`
+	KubernetesVersion string `json:"kubernetes_version,omitempty"`
 
-	Masters []*config.Master `json:"masters"`
-	Workers []*config.Worker `json:"workers"`
+	Masters []*config.Master `json:"masters,omitempty"`
+	Workers []*config.Worker `json:"workers,omitempty"`
 }
 
 // DefaultRequest provides a default request object by best effort.

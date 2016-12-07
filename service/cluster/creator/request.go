@@ -6,6 +6,7 @@ import (
 	"github.com/giantswarm/clusterclient/service/cluster/creator/config"
 )
 
+// Request is the configuration for the service action.
 type Request struct {
 	APIEndpoint string    `json:"api_endpoint,omitempty"`
 	CreateDate  time.Time `json:"create_date,omitempty"`

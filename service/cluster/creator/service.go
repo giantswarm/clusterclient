@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/giantswarm/clusterclient/service/cluster/searcher"
 	"github.com/go-resty/resty"
 )
 
@@ -88,14 +89,16 @@ func (s *Service) Create(request Request) (*Response, error) {
 		if err != nil {
 			return nil, maskAny(err)
 		}
-		r, err := s.RestClient.R().SetResult(DefaultResponse()).Get(u.String())
+		r, err := s.RestClient.R().SetResult(searcher.DefaultResponse()).Get(u.String())
 		if err != nil {
 			return nil, maskAny(err)
 		}
 		if r.StatusCode() != 200 {
 			return nil, maskAny(fmt.Errorf(string(r.Body())))
 		}
-		response = r.Result().(*Response)
+		clientResponse := r.Result().(*searcher.Response)
+		response = DefaultResponse()
+		response.Cluster.ID = clientResponse.ID
 	}
 
 	return response, nil

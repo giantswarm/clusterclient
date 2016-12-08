@@ -1,15 +1,17 @@
 package config
 
+// Master configures the Kubernetes master nodes.
 type Master struct {
-	CPUs   int               `json:"cpus"`
-	Labels map[string]string `json:"labels"`
-	Ram    string            `json:"ram"`
+	CPU     *CPU     `json:"cpu"`
+	Memory  *Memory  `json:"memory"`
+	Storage *Storage `json:"storage"`
 }
 
+// DefaultMaster provides a default master configuration by best effort.
 func DefaultMaster() *Master {
 	return &Master{
-		CPUs:   0,
-		Labels: map[string]string{},
-		Ram:    "",
+		CPU:     DefaultCPU(),
+		Memory:  DefaultMemory(),
+		Storage: DefaultStorage(),
 	}
 }

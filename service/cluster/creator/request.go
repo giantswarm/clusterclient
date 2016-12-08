@@ -8,10 +8,13 @@ import (
 
 // Request is the configuration for the service action.
 type Request struct {
-	APIEndpoint string    `json:"api_endpoint,omitempty"`
-	CreateDate  time.Time `json:"create_date,omitempty"`
-	ID          string    `json:"id,omitempty"`
-	Name        string    `json:"name,omitempty"`
+	// TODO remove this when v3 is no more used
+	APIEndpoint string    `json:"api_endpoint"`
+	CreateDate  time.Time `json:"create_date"`
+	ID          string    `json:"id"`
+	// TODO remove this when v3 is no more used
+
+	Name string `json:"name,omitempty"`
 
 	Owner string `json:"owner,omitempty"`
 
@@ -24,10 +27,7 @@ type Request struct {
 // DefaultRequest provides a default request object by best effort.
 func DefaultRequest() Request {
 	return Request{
-		APIEndpoint: "",
-		CreateDate:  time.Time{},
-		ID:          "",
-		Name:        "",
+		Name: "",
 
 		Owner: "",
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/giantswarm/clusterclient/service/cluster/searcher"
 	"github.com/go-resty/resty"
 )
 
@@ -60,19 +61,45 @@ type Service struct {
 }
 
 func (s *Service) Create(request Request) (*Response, error) {
-	u, err := s.URL.Parse(Endpoint)
-	if err != nil {
-		return nil, maskAny(err)
+	// At first we are going to create a new cluster resource. The result in case
+	// the requested resource was created successfully will be a response
+	// containing information about the location of the created resource.
+	var resourceLocation string
+	{
+		u, err := s.URL.Parse(Endpoint)
+		if err != nil {
+			return nil, maskAny(err)
+		}
+		r, err := s.RestClient.R().SetBody(request).Post(u.String())
+		if err != nil {
+			return nil, maskAny(err)
+		}
+		if r.StatusCode() != 201 {
+			return nil, maskAny(fmt.Errorf(string(r.Body())))
+		}
+		resourceLocation = r.Header().Get("Location")
 	}
 
-	r, err := s.RestClient.R().SetBody(request).SetResult(DefaultResponse()).Post(u.String())
-	if err != nil {
-		return nil, maskAny(err)
+	// We know the location of the created resource from the response location
+	// header. Now we request it to return relevant information about the created
+	// resource in our response.
+	var response *Response
+	{
+		u, err := s.URL.Parse(resourceLocation)
+		if err != nil {
+			return nil, maskAny(err)
+		}
+		r, err := s.RestClient.R().SetResult(searcher.DefaultResponse()).Get(u.String())
+		if err != nil {
+			return nil, maskAny(err)
+		}
+		if r.StatusCode() != 200 {
+			return nil, maskAny(fmt.Errorf(string(r.Body())))
+		}
+		clientResponse := r.Result().(*searcher.Response)
+		response = DefaultResponse()
+		response.Cluster.ID = clientResponse.ID
 	}
 
-	if r.StatusCode() != 201 {
-		return nil, maskAny(fmt.Errorf(string(r.Body())))
-	}
-
-	return DefaultResponse(), nil
+	return response, nil
 }

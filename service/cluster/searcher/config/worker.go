@@ -1,15 +1,19 @@
 package config
 
+// Worker configures the Kubernetes worker nodes.
 type Worker struct {
-	CPUs   int               `json:"cpus"`
-	Labels map[string]string `json:"labels"`
-	Ram    string            `json:"ram"`
+	CPU     *CPU              `json:"cpu"`
+	Labels  map[string]string `json:"labels"`
+	Memory  *Memory           `json:"memory"`
+	Storage *Storage          `json:"storage"`
 }
 
+// DefaultWorker provides a default worker configuration by best effort.
 func DefaultWorker() *Worker {
 	return &Worker{
-		CPUs:   0,
-		Labels: map[string]string{},
-		Ram:    "",
+		CPU:     DefaultCPU(),
+		Labels:  map[string]string{},
+		Memory:  DefaultMemory(),
+		Storage: DefaultStorage(),
 	}
 }

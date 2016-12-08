@@ -4,7 +4,7 @@ package config
 type Worker struct {
 	CPU     *CPU              `json:"cpu"`
 	Labels  map[string]string `json:"labels"`
-	Ram     *Ram              `json:"ram"`
+	Memory  *Memory           `json:"memory"`
 	Storage *Storage          `json:"storage"`
 }
 
@@ -13,7 +13,7 @@ func DefaultWorker() *Worker {
 	return &Worker{
 		CPU:     DefaultCPU(),
 		Labels:  map[string]string{},
-		Ram:     DefaultRam(),
+		Memory:  DefaultMemory(),
 		Storage: DefaultStorage(),
 	}
 }

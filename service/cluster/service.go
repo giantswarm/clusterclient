@@ -9,6 +9,7 @@ import (
 	"github.com/giantswarm/clusterclient/service/cluster/deleter"
 	"github.com/giantswarm/clusterclient/service/cluster/lister"
 	"github.com/giantswarm/clusterclient/service/cluster/searcher"
+	"github.com/giantswarm/clusterclient/service/cluster/updater"
 )
 
 // Config represents the configuration used to create a new service.
@@ -90,11 +91,23 @@ func New(config Config) (*Service, error) {
 		}
 	}
 
+	var updaterService *updater.Service
+	{
+		updaterConfig := updater.DefaultConfig()
+		updaterConfig.RestClient = config.RestClient
+		updaterConfig.URL = config.URL
+		updaterService, err = updater.New(updaterConfig)
+		if err != nil {
+			return nil, maskAny(err)
+		}
+	}
+
 	newService := &Service{
 		Creator:  creatorService,
 		Deleter:  deleterService,
 		Lister:   listerService,
 		Searcher: searcherService,
+		Updater:  updaterService,
 	}
 
 	return newService, nil
@@ -105,4 +118,5 @@ type Service struct {
 	Deleter  *deleter.Service
 	Lister   *lister.Service
 	Searcher *searcher.Service
+	Updater  *updater.Service
 }

@@ -3,6 +3,7 @@ package keypair
 import (
 	"net/url"
 
+	micrologger "github.com/giantswarm/microkit/logger"
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/keypair/creator"
@@ -12,6 +13,7 @@ import (
 // Config represents the configuration used to create a new service.
 type Config struct {
 	// Dependencies.
+	Logger     micrologger.Logger
 	RestClient *resty.Client
 
 	// Settings.
@@ -23,6 +25,7 @@ type Config struct {
 func DefaultConfig() Config {
 	return Config{
 		// Dependencies.
+		Logger:     nil,
 		RestClient: resty.New(),
 
 		// Settings.
@@ -47,6 +50,7 @@ func New(config Config) (*Service, error) {
 	var creatorService *creator.Service
 	{
 		creatorConfig := creator.DefaultConfig()
+		creatorConfig.Logger = config.Logger
 		creatorConfig.RestClient = config.RestClient
 		creatorConfig.URL = config.URL
 		creatorService, err = creator.New(creatorConfig)
@@ -58,6 +62,7 @@ func New(config Config) (*Service, error) {
 	var listerService *lister.Service
 	{
 		listerConfig := lister.DefaultConfig()
+		listerConfig.Logger = config.Logger
 		listerConfig.RestClient = config.RestClient
 		listerConfig.URL = config.URL
 		listerService, err = lister.New(listerConfig)

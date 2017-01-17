@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
+	micrologger "github.com/giantswarm/microkit/logger"
 	"github.com/go-resty/resty"
 )
 
@@ -11,11 +12,15 @@ const (
 	// Endpoint is the API endpoint of the service this client action interacts
 	// with.
 	Endpoint = "/v1/clusters/%s/key-pairs/"
+	// Name is the service name being implemented. This can be used for e.g.
+	// logging.
+	Name = "keypair/creator"
 )
 
 // Config represents the configuration used to create a creator service.
 type Config struct {
 	// Dependencies.
+	Logger     micrologger.Logger
 	RestClient *resty.Client
 
 	// Settings.
@@ -27,6 +32,7 @@ type Config struct {
 func DefaultConfig() Config {
 	newConfig := Config{
 		// Dependencies.
+		Logger:     nil,
 		RestClient: resty.New(),
 
 		// Settings.
@@ -65,10 +71,12 @@ func (s *Service) Create(request Request) (*Response, error) {
 		return nil, maskAny(err)
 	}
 
+	s.Logger.Log("debug", fmt.Sprintf("sending POST request to %s", u.String()), "service", Name)
 	r, err := s.RestClient.R().SetBody(request.KeyPair).SetResult(DefaultResponse()).Post(u.String())
 	if err != nil {
 		return nil, maskAny(err)
 	}
+	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
 	if r.StatusCode() != 200 {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))

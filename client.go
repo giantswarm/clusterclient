@@ -5,6 +5,7 @@ package clusterclient
 import (
 	"net/url"
 
+	micrologger "github.com/giantswarm/microkit/logger"
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/cluster"
@@ -15,6 +16,7 @@ import (
 // Config represents the configuration used to create a new client.
 type Config struct {
 	// Dependencies.
+	Logger     micrologger.Logger
 	RestClient *resty.Client
 
 	// Settings.
@@ -26,6 +28,7 @@ type Config struct {
 func DefaultConfig() Config {
 	return Config{
 		// Dependencies.
+		Logger:     nil,
 		RestClient: resty.New(),
 
 		// Settings.
@@ -53,6 +56,7 @@ func New(config Config) (*Client, error) {
 	var clusterService *cluster.Service
 	{
 		clusterConfig := cluster.DefaultConfig()
+		clusterConfig.Logger = config.Logger
 		clusterConfig.RestClient = config.RestClient
 		clusterConfig.URL = u
 		clusterService, err = cluster.New(clusterConfig)
@@ -64,6 +68,7 @@ func New(config Config) (*Client, error) {
 	var keypairService *keypair.Service
 	{
 		keypairConfig := keypair.DefaultConfig()
+		keypairConfig.Logger = config.Logger
 		keypairConfig.RestClient = config.RestClient
 		keypairConfig.URL = u
 		keypairService, err = keypair.New(keypairConfig)

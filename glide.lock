@@ -1,10 +1,27 @@
-hash: 7320d2b5d5434bf70c0910fbd4e607a1df7428af0e2ec449c5e996e5d812172c
-updated: 2017-01-14T01:45:43.025310946+01:00
+hash: 640e3842af896741a54be2a0130bd1abd0d15a56c3f33fc5afbffe5042fdff1e
+updated: 2017-01-17T02:32:09.091056498+01:00
 imports:
+- name: github.com/giantswarm/microkit
+  version: aced65287b48d7fd96d8baf01b4bec8cb8c0345e
+  subpackages:
+  - error
+  - logger
+- name: github.com/go-kit/kit
+  version: f66b0e13579bfc5a48b9e2a94b1209c107ea1f41
+  subpackages:
+  - endpoint
+  - log
+  - transport/http
+- name: github.com/go-logfmt/logfmt
+  version: 390ab7935ee28ec6b286364bba9b4dd6410cb3d5
 - name: github.com/go-resty/resty
   version: 24dc7ba4bc1ef9215048b28e7248f99c42901db5
+- name: github.com/go-stack/stack
+  version: 100eb0c0a9c5b306ca2fb4f165df21d80ada4b82
 - name: github.com/juju/errgo
   version: 08cceb5d0b5331634b9826762a8fd53b29b86ad8
+- name: github.com/kr/logfmt
+  version: b84e30acd515aadc4b783ad4ff83aff3299bdfe0
 - name: golang.org/x/net
   version: 6acef71eb69611914f7a30939ea9f6e194c78172
   subpackages:

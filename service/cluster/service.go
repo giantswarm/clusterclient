@@ -3,6 +3,7 @@ package cluster
 import (
 	"net/url"
 
+	micrologger "github.com/giantswarm/microkit/logger"
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/cluster/creator"
@@ -15,6 +16,7 @@ import (
 // Config represents the configuration used to create a new service.
 type Config struct {
 	// Dependencies.
+	Logger     micrologger.Logger
 	RestClient *resty.Client
 
 	// Settings.
@@ -26,6 +28,7 @@ type Config struct {
 func DefaultConfig() Config {
 	return Config{
 		// Dependencies.
+		Logger:     nil,
 		RestClient: resty.New(),
 
 		// Settings.
@@ -50,6 +53,7 @@ func New(config Config) (*Service, error) {
 	var creatorService *creator.Service
 	{
 		creatorConfig := creator.DefaultConfig()
+		creatorConfig.Logger = config.Logger
 		creatorConfig.RestClient = config.RestClient
 		creatorConfig.URL = config.URL
 		creatorService, err = creator.New(creatorConfig)
@@ -61,6 +65,7 @@ func New(config Config) (*Service, error) {
 	var deleterService *deleter.Service
 	{
 		deleterConfig := deleter.DefaultConfig()
+		deleterConfig.Logger = config.Logger
 		deleterConfig.RestClient = config.RestClient
 		deleterConfig.URL = config.URL
 		deleterService, err = deleter.New(deleterConfig)
@@ -72,6 +77,7 @@ func New(config Config) (*Service, error) {
 	var listerService *lister.Service
 	{
 		listerConfig := lister.DefaultConfig()
+		listerConfig.Logger = config.Logger
 		listerConfig.RestClient = config.RestClient
 		listerConfig.URL = config.URL
 		listerService, err = lister.New(listerConfig)
@@ -83,6 +89,7 @@ func New(config Config) (*Service, error) {
 	var searcherService *searcher.Service
 	{
 		searcherConfig := searcher.DefaultConfig()
+		searcherConfig.Logger = config.Logger
 		searcherConfig.RestClient = config.RestClient
 		searcherConfig.URL = config.URL
 		searcherService, err = searcher.New(searcherConfig)
@@ -94,7 +101,7 @@ func New(config Config) (*Service, error) {
 	var updaterService *updater.Service
 	{
 		updaterConfig := updater.DefaultConfig()
-		updaterConfig.RestClient = config.RestClient
+		updaterConfig.Logger = config.Logger
 		updaterConfig.URL = config.URL
 		updaterService, err = updater.New(updaterConfig)
 		if err != nil {

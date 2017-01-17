@@ -76,7 +76,7 @@ func (s *Service) List(request Request) ([]*Response, error) {
 	if err != nil {
 		return nil, maskAny(err)
 	}
-	s.Logger.Log("debug", fmt.Sprintf("received status code %s", r.StatusCode()), "service", Name)
+	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
 	if r.StatusCode() != 200 {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))

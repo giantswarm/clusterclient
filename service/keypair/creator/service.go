@@ -2,6 +2,7 @@ package creator
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 
 	micrologger "github.com/giantswarm/microkit/logger"

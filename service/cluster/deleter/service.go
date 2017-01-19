@@ -2,6 +2,7 @@ package deleter
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 
 	micrologger "github.com/giantswarm/microkit/logger"
@@ -76,7 +77,9 @@ func (s *Service) Delete(request Request) (*Response, error) {
 	}
 	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
-	if r.StatusCode() != 202 {
+	if r.StatusCode() == http.StatusNotFound {
+		return nil, maskAny(notFoundError)
+	} else if r.StatusCode() != http.StatusAccepted {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 

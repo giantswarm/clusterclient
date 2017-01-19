@@ -2,6 +2,7 @@ package creator
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 
 	micrologger "github.com/giantswarm/microkit/logger"
@@ -83,9 +84,11 @@ func (s *Service) Create(request Request) (*Response, error) {
 			return nil, maskAny(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
-		if r.StatusCode() != 201 {
+
+		if r.StatusCode() != http.StatusCreated {
 			return nil, maskAny(fmt.Errorf(string(r.Body())))
 		}
+
 		resourceLocation = r.Header().Get("Location")
 	}
 
@@ -104,9 +107,13 @@ func (s *Service) Create(request Request) (*Response, error) {
 			return nil, maskAny(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
-		if r.StatusCode() != 200 {
+
+		if r.StatusCode() == http.StatusNotFound {
+			return nil, maskAny(notFoundError)
+		} else if r.StatusCode() != http.StatusOK {
 			return nil, maskAny(fmt.Errorf(string(r.Body())))
 		}
+
 		clientResponse := r.Result().(*searcher.Response)
 		response = DefaultResponse()
 		response.Cluster.ID = clientResponse.ID

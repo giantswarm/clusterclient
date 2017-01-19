@@ -2,6 +2,7 @@ package updater
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 
 	micrologger "github.com/giantswarm/microkit/logger"
@@ -78,7 +79,9 @@ func (s *Service) Update(request Request) (*Response, error) {
 	}
 	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
-	if r.StatusCode() != 200 {
+	if r.StatusCode() == http.StatusNotFound {
+		return nil, maskAny(notFoundError)
+	} else if r.StatusCode() != http.StatusOK {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 

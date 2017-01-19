@@ -26,28 +26,31 @@ type Config struct {
 // DefaultConfig provides a default configuration to create a new service by
 // best effort.
 func DefaultConfig() Config {
-	return Config{
+	var err error
+
+	var newLogger micrologger.Logger
+	{
+		loggerConfig := micrologger.DefaultConfig()
+		newLogger, err = micrologger.New(loggerConfig)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	config := Config{
 		// Dependencies.
-		Logger:     nil,
+		Logger:     newLogger,
 		RestClient: resty.New(),
 
 		// Settings.
 		URL: nil,
 	}
+
+	return config
 }
 
 // New creates a new configured service object.
 func New(config Config) (*Service, error) {
-	// Dependencies.
-	if config.RestClient == nil {
-		return nil, maskAnyf(invalidConfigError, "rest client must not be empty")
-	}
-
-	// Settings.
-	if config.URL == nil {
-		return nil, maskAnyf(invalidConfigError, "URL must not be empty")
-	}
-
 	var err error
 
 	var creatorService *creator.Service

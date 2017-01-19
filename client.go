@@ -26,23 +26,31 @@ type Config struct {
 // DefaultConfig provides a default configuration to create a new client by best
 // effort.
 func DefaultConfig() Config {
-	return Config{
+	var err error
+
+	var newLogger micrologger.Logger
+	{
+		loggerConfig := micrologger.DefaultConfig()
+		newLogger, err = micrologger.New(loggerConfig)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	config := Config{
 		// Dependencies.
-		Logger:     nil,
+		Logger:     newLogger,
 		RestClient: resty.New(),
 
 		// Settings.
 		Address: "http://127.0.0.1:8080",
 	}
+
+	return config
 }
 
 // New creates a new configured client.
 func New(config Config) (*Client, error) {
-	// Dependencies.
-	if config.RestClient == nil {
-		return nil, maskAnyf(invalidConfigError, "rest client must not be empty")
-	}
-
 	// Settings.
 	if config.Address == "" {
 		return nil, maskAnyf(invalidConfigError, "address must not be empty")

@@ -1,8 +1,8 @@
 hash: 640e3842af896741a54be2a0130bd1abd0d15a56c3f33fc5afbffe5042fdff1e
-updated: 2017-01-17T02:32:09.091056498+01:00
+updated: 2017-01-19T18:22:28.203108907+01:00
 imports:
 - name: github.com/giantswarm/microkit
-  version: aced65287b48d7fd96d8baf01b4bec8cb8c0345e
+  version: 3f4cfe84b26903f2f28c9185663c62a5a8b78f8c
   subpackages:
   - error
   - logger
@@ -23,7 +23,7 @@ imports:
 - name: github.com/kr/logfmt
   version: b84e30acd515aadc4b783ad4ff83aff3299bdfe0
 - name: golang.org/x/net
-  version: 6acef71eb69611914f7a30939ea9f6e194c78172
+  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
   subpackages:
   - publicsuffix
 testImports: []

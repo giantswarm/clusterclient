@@ -31,19 +31,35 @@ type Config struct {
 // DefaultConfig provides a default configuration to create a new deleter
 // service by best effort.
 func DefaultConfig() Config {
-	return Config{
+	var err error
+
+	var newLogger micrologger.Logger
+	{
+		loggerConfig := micrologger.DefaultConfig()
+		newLogger, err = micrologger.New(loggerConfig)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	config := Config{
 		// Dependencies.
-		Logger:     nil,
+		Logger:     newLogger,
 		RestClient: resty.New(),
 
 		// Settings.
 		URL: nil,
 	}
+
+	return config
 }
 
 // New creates a new configured deleter service.
 func New(config Config) (*Service, error) {
 	// Dependencies.
+	if config.Logger == nil {
+		return nil, maskAnyf(invalidConfigError, "logger must not be empty")
+	}
 	if config.RestClient == nil {
 		return nil, maskAnyf(invalidConfigError, "rest client must not be empty")
 	}

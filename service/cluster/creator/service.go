@@ -7,6 +7,7 @@ import (
 
 	micrologger "github.com/giantswarm/microkit/logger"
 	"github.com/go-resty/resty"
+	"golang.org/x/net/context"
 
 	"github.com/giantswarm/clusterclient/service/cluster/searcher"
 )
@@ -82,7 +83,7 @@ type Service struct {
 	Config
 }
 
-func (s *Service) Create(request Request) (*Response, error) {
+func (s *Service) Create(ctx context.Context, request Request) (*Response, error) {
 	// At first we are going to create a new cluster resource. The result in case
 	// the requested resource was created successfully will be a response
 	// containing information about the location of the created resource.

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"net/http"
 
 	kitendpoint "github.com/go-kit/kit/endpoint"
@@ -86,11 +87,17 @@ type ResponseError interface {
 	// SetMessage tracks the given response message for the current response
 	// error. The given response message will be used for response creation.
 	SetMessage(message string)
+	// Underlying returns the actual underlying error, which is expected to be of
+	// type kithttp.Error.
+	Underlying() error
 }
 
 // ResponseWriter is a wrapper for http.ResponseWriter to track the written
 // status code.
 type ResponseWriter interface {
+	// BodyBuffer returns the buffer which is used to track the bytes being
+	// written to the response.
+	BodyBuffer() *bytes.Buffer
 	// Header is only a wrapper around http.ResponseWriter.Header.
 	Header() http.Header
 	// StatusCode returns either the default status code of the one that was

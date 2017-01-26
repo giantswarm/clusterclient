@@ -28,6 +28,12 @@ import (
 	transactiontracked "github.com/giantswarm/microkit/transaction/context/tracked"
 )
 
+const (
+	// TransactionIDHeader is the canonical representation of the transaction ID
+	// HTTP header field.
+	TransactionIDHeader = "X-Transaction-ID"
+)
+
 // Config represents the configuration used to create a new server object.
 type Config struct {
 	// Dependencies.
@@ -117,17 +123,17 @@ func New(config Config) (Server, error) {
 	}
 
 	newServer := &server{
-		bootOnce:     sync.Once{},
-		endpoints:    config.Endpoints,
-		errorEncoder: config.ErrorEncoder,
-		httpServer:   nil,
-		listenURL:    listenURL,
-		logger:       config.Logger,
-		requestFuncs: config.RequestFuncs,
-		router:       config.Router,
-		serviceName:  config.ServiceName,
-		shutdownOnce: sync.Once{},
-		responder:    config.TransactionResponder,
+		bootOnce:             sync.Once{},
+		endpoints:            config.Endpoints,
+		errorEncoder:         config.ErrorEncoder,
+		httpServer:           nil,
+		listenURL:            listenURL,
+		logger:               config.Logger,
+		requestFuncs:         config.RequestFuncs,
+		router:               config.Router,
+		serviceName:          config.ServiceName,
+		shutdownOnce:         sync.Once{},
+		transactionResponder: config.TransactionResponder,
 	}
 
 	return newServer, nil
@@ -135,17 +141,17 @@ func New(config Config) (Server, error) {
 
 // server manages the transport logic and endpoint registration.
 type server struct {
-	bootOnce     sync.Once
-	endpoints    []Endpoint
-	errorEncoder kithttp.ErrorEncoder
-	httpServer   *graceful.Server
-	listenURL    *url.URL
-	logger       logger.Logger
-	requestFuncs []kithttp.RequestFunc
-	router       *mux.Router
-	serviceName  string
-	shutdownOnce sync.Once
-	responder    transaction.Responder
+	bootOnce             sync.Once
+	endpoints            []Endpoint
+	errorEncoder         kithttp.ErrorEncoder
+	httpServer           *graceful.Server
+	listenURL            *url.URL
+	logger               logger.Logger
+	requestFuncs         []kithttp.RequestFunc
+	router               *mux.Router
+	serviceName          string
+	shutdownOnce         sync.Once
+	transactionResponder transaction.Responder
 }
 
 func (s *server) Boot() {
@@ -230,11 +236,11 @@ func (s *server) Boot() {
 				{
 					ctx = transactiontracked.NewContext(ctx, false)
 
-					transactionID := r.Header.Get("X-Transaction-ID")
+					transactionID := r.Header.Get(TransactionIDHeader)
 					if transactionID != "" {
 						ctx = transactionid.NewContext(ctx, transactionID)
 
-						exists, err := s.responder.Exists(ctx, transactionID)
+						exists, err := s.transactionResponder.Exists(ctx, transactionID)
 						if err != nil {
 							errorEncoder(ctx, err, w)
 							return
@@ -296,7 +302,7 @@ func (s *server) Boot() {
 						if !ok {
 							return nil, microerror.MaskAnyf(invalidContextError, "transaction ID must not be empty")
 						}
-						err := s.responder.Reply(ctx, transactionID, responseWriter)
+						err := s.transactionResponder.Reply(ctx, transactionID, responseWriter)
 						if err != nil {
 							return nil, microerror.MaskAny(err)
 						}
@@ -364,7 +370,7 @@ func (s *server) Boot() {
 						// transaction ID, we cannot track it at all. So we return here.
 						return nil
 					}
-					err = s.responder.Track(ctx, transactionID, responseWriter)
+					err = s.transactionResponder.Track(ctx, transactionID, responseWriter)
 					if err != nil {
 						return microerror.MaskAny(err)
 					}
@@ -461,6 +467,10 @@ func (s *server) ErrorEncoder() kithttp.ErrorEncoder {
 	}
 }
 
+func (s *server) Logger() micrologger.Logger {
+	return s.logger
+}
+
 func (s *server) RequestFuncs() []kithttp.RequestFunc {
 	return s.requestFuncs
 }
@@ -490,4 +500,8 @@ func (s *server) Shutdown() {
 
 		wg.Wait()
 	})
+}
+
+func (s *server) TransactionResponder() microtransaction.Responder {
+	return s.transactionResponder
 }

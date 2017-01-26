@@ -6,6 +6,8 @@ import (
 	"net/url"
 
 	micrologger "github.com/giantswarm/microkit/logger"
+	microserver "github.com/giantswarm/microkit/server"
+	transactionid "github.com/giantswarm/microkit/transaction/context/id"
 	"github.com/go-resty/resty"
 	"golang.org/x/net/context"
 
@@ -89,22 +91,31 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 	// containing information about the location of the created resource.
 	var resourceLocation string
 	{
+		req := s.RestClient.R()
+		req.SetBody(request)
+
+		transactionID, ok := transactionid.FromContext(ctx)
+		if ok {
+			req.SetHeader(microserver.TransactionIDHeader, transactionID)
+		}
+
 		u, err := s.URL.Parse(Endpoint)
 		if err != nil {
 			return nil, maskAny(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("sending POST request to %s", u.String()), "service", Name)
-		r, err := s.RestClient.R().SetBody(request).Post(u.String())
+
+		res, err := req.Post(u.String())
 		if err != nil {
 			return nil, maskAny(err)
 		}
-		s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
+		s.Logger.Log("debug", fmt.Sprintf("received status code %d", res.StatusCode()), "service", Name)
 
-		if r.StatusCode() != http.StatusCreated {
-			return nil, maskAny(fmt.Errorf(string(r.Body())))
+		if res.StatusCode() != http.StatusCreated {
+			return nil, maskAny(fmt.Errorf(string(res.Body())))
 		}
 
-		resourceLocation = r.Header().Get("Location")
+		resourceLocation = res.Header().Get("Location")
 	}
 
 	// We know the location of the created resource from the response location

@@ -4,3 +4,4 @@ import:
   version: ~0.9.0
 - package: github.com/juju/errgo
 - package: github.com/giantswarm/microkit
+  version: d7b15f1721c7a455c0633885e7f6b9c663de33e5

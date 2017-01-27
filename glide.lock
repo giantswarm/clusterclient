@@ -1,5 +1,5 @@
-hash: 8588c9fd16e08c0f520fdceb185ef0c8370c3af883b2612ef5dd64822bd90b2b
-updated: 2017-01-27T01:26:57.585967748+01:00
+hash: b564fa08a13833b6df0ed6261f48e9a06ebff802fabb303cbb3487c539c876d4
+updated: 2017-01-27T12:58:24.283067744+01:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
@@ -20,7 +20,7 @@ imports:
 - name: github.com/ghodss/yaml
   version: 73d445a93680fa1a78ae23a5839bad48f32ba1ee
 - name: github.com/giantswarm/microkit
-  version: 75f5a761f44c923574857bccee1a36644ae7836a
+  version: d7b15f1721c7a455c0633885e7f6b9c663de33e5
   subpackages:
   - error
   - logger

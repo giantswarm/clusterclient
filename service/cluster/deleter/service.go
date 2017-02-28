@@ -88,7 +88,7 @@ func (s *Service) Delete(ctx context.Context, request Request) (*Response, error
 	}
 
 	s.Logger.Log("debug", fmt.Sprintf("sending DELETE request to %s", u.String()), "service", Name)
-	r, err := s.RestClient.R().SetBody(request).SetResult(DefaultResponse()).Delete(u.String())
+	r, err := s.RestClient.R().SetResult(DefaultResponse()).Delete(u.String())
 	if err != nil {
 		return nil, maskAny(err)
 	}

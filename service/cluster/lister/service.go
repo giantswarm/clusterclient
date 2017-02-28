@@ -88,7 +88,7 @@ func (s *Service) List(ctx context.Context, request Request) ([]*Response, error
 	}
 
 	s.Logger.Log("debug", fmt.Sprintf("sending GET request to %s", u.String()), "service", Name)
-	r, err := s.RestClient.R().SetBody(request).SetResult(DefaultResponse()).Get(u.String())
+	r, err := s.RestClient.R().SetResult(DefaultResponse()).Get(u.String())
 	if err != nil {
 		return nil, maskAny(err)
 	}

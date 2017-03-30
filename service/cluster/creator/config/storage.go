@@ -8,6 +8,6 @@ type Storage struct {
 // DefaultStorage provides a default storage configuration by best effort.
 func DefaultStorage() *Storage {
 	return &Storage{
-		SizeGB: 20,
+		SizeGB: 0,
 	}
 }

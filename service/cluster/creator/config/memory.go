@@ -8,6 +8,6 @@ type Memory struct {
 // DefaultMemory provides a default ram configuration by best effort.
 func DefaultMemory() *Memory {
 	return &Memory{
-		SizeGB: 1,
+		SizeGB: 0,
 	}
 }

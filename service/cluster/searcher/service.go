@@ -77,10 +77,12 @@ func New(config Config) (*Service, error) {
 	return newService, nil
 }
 
+// Service is the service data structure.
 type Service struct {
 	Config
 }
 
+// Search is the request handler used for looking up a distinct cluster
 func (s *Service) Search(ctx context.Context, request Request) (*Response, error) {
 	u, err := s.URL.Parse(fmt.Sprintf(Endpoint, request.Cluster.ID))
 	if err != nil {

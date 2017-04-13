@@ -20,6 +20,8 @@ type Request struct {
 
 	KubernetesVersion string `json:"kubernetes_version,omitempty"`
 
+	AWSSettings config.ClusterAWSSettings `json:"aws,omitempty"`
+
 	Masters []*config.Master `json:"masters,omitempty"`
 	Workers []*config.Worker `json:"workers,omitempty"`
 }
@@ -32,6 +34,8 @@ func DefaultRequest() Request {
 		Owner: "",
 
 		KubernetesVersion: "",
+
+		AWSSettings: config.ClusterAWSSettings{},
 
 		Masters: []*config.Master{},
 		Workers: []*config.Worker{},

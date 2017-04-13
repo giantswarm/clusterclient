@@ -17,6 +17,8 @@ type Response struct {
 
 	KubernetesVersion string `json:"kubernetes_version"`
 
+	AWSSettings config.ClusterAWSSettings `json:"aws,omitempty"`
+
 	Masters []*config.Master `json:"masters"`
 	Workers []*config.Worker `json:"workers"`
 }
@@ -32,6 +34,8 @@ func DefaultResponse() *Response {
 		Owner: "",
 
 		KubernetesVersion: "",
+
+		AWSSettings: config.ClusterAWSSettings{},
 
 		Masters: []*config.Master{},
 		Workers: []*config.Worker{},

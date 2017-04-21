@@ -2,7 +2,7 @@ package config
 
 // Storage configures the machine storage.
 type Storage struct {
-	SizeGB int `json:"size_gb"`
+	SizeGB float64 `json:"size_gb"`
 }
 
 // DefaultStorage provides a default storage configuration by best effort.

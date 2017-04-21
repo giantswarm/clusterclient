@@ -2,7 +2,7 @@ package config
 
 // CPU configures the machine CPU.
 type CPU struct {
-	Cores int `json:"cores"`
+	Cores float64 `json:"cores"`
 }
 
 // DefaultCPU provides a default CPU configuration by best effort.

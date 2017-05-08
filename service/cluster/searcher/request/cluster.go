@@ -1,4 +1,4 @@
-package config
+package request
 
 // Cluster is an object containing cluster specific information.
 type Cluster struct {
@@ -6,8 +6,8 @@ type Cluster struct {
 }
 
 // DefaultCluster provides a default cluster object by best effort.
-func DefaultCluster() *Cluster {
-	return &Cluster{
+func DefaultCluster() Cluster {
+	return Cluster{
 		ID: "",
 	}
 }

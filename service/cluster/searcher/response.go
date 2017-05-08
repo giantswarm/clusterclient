@@ -3,7 +3,8 @@ package searcher
 import (
 	"time"
 
-	"github.com/giantswarm/clusterclient/service/cluster/searcher/config"
+	"github.com/giantswarm/clusterclient/service/cluster/searcher/response"
+	"github.com/giantswarm/clusterclient/service/cluster/searcher/response/aws"
 )
 
 // Response is the return value of the service action.
@@ -17,10 +18,10 @@ type Response struct {
 
 	KubernetesVersion string `json:"kubernetes_version"`
 
-	AWSSettings config.ClusterAWSSettings `json:"aws,omitempty"`
+	AWS aws.Cluster `json:"aws,omitempty"`
 
-	Masters []*config.Master `json:"masters"`
-	Workers []*config.Worker `json:"workers"`
+	Masters []response.Master `json:"masters"`
+	Workers []response.Worker `json:"workers"`
 }
 
 // DefaultResponse provides a default response object by best effort.
@@ -35,9 +36,9 @@ func DefaultResponse() *Response {
 
 		KubernetesVersion: "",
 
-		AWSSettings: config.ClusterAWSSettings{},
+		AWS: aws.DefaultCluster(),
 
-		Masters: []*config.Master{},
-		Workers: []*config.Worker{},
+		Masters: []response.Master{},
+		Workers: []response.Worker{},
 	}
 }

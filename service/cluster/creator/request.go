@@ -1,29 +1,22 @@
 package creator
 
 import (
-	"time"
-
-	"github.com/giantswarm/clusterclient/service/cluster/creator/config"
+	"github.com/giantswarm/clusterclient/service/cluster/creator/request"
+	"github.com/giantswarm/clusterclient/service/cluster/creator/request/aws"
 )
 
 // Request is the configuration for the service action.
 type Request struct {
-	// TODO remove this when v3 is no more used
-	APIEndpoint string    `json:"api_endpoint"`
-	CreateDate  time.Time `json:"create_date"`
-	ID          string    `json:"id"`
-	// TODO remove this when v3 is no more used
-
 	Name string `json:"name,omitempty"`
 
 	Owner string `json:"owner,omitempty"`
 
 	KubernetesVersion string `json:"kubernetes_version,omitempty"`
 
-	AWSSettings config.ClusterAWSSettings `json:"aws,omitempty"`
+	AWS aws.Cluster `json:"aws,omitempty"`
 
-	Masters []*config.Master `json:"masters,omitempty"`
-	Workers []*config.Worker `json:"workers,omitempty"`
+	Masters []request.Master `json:"masters,omitempty"`
+	Workers []request.Worker `json:"workers,omitempty"`
 }
 
 // DefaultRequest provides a default request object by best effort.
@@ -35,9 +28,9 @@ func DefaultRequest() Request {
 
 		KubernetesVersion: "",
 
-		AWSSettings: config.ClusterAWSSettings{},
+		AWS: aws.DefaultCluster(),
 
-		Masters: []*config.Master{},
-		Workers: []*config.Worker{},
+		Masters: []request.Master{},
+		Workers: []request.Worker{},
 	}
 }

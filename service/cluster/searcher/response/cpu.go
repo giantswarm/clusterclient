@@ -1,4 +1,4 @@
-package config
+package response
 
 // CPU configures the machine CPU.
 type CPU struct {
@@ -6,8 +6,8 @@ type CPU struct {
 }
 
 // DefaultCPU provides a default CPU configuration by best effort.
-func DefaultCPU() *CPU {
-	return &CPU{
+func DefaultCPU() CPU {
+	return CPU{
 		Cores: 0,
 	}
 }

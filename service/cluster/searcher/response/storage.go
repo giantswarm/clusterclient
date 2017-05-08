@@ -1,4 +1,4 @@
-package config
+package response
 
 // Storage configures the machine storage.
 type Storage struct {
@@ -6,8 +6,8 @@ type Storage struct {
 }
 
 // DefaultStorage provides a default storage configuration by best effort.
-func DefaultStorage() *Storage {
-	return &Storage{
+func DefaultStorage() Storage {
+	return Storage{
 		SizeGB: 0,
 	}
 }

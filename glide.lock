@@ -1,12 +1,12 @@
 hash: 710b6b51beb4d2a05fec7c0099466316f95faa38836a9af5dcc43ab2c4a535bd
-updated: 2017-04-24T18:14:43.693435993+02:00
+updated: 2017-05-08T12:32:10.883099382+02:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
   subpackages:
   - quantile
 - name: github.com/coreos/etcd
-  version: e5b7ee2d03627ca33201da428b8110ef7c3e95f1
+  version: 43b75072bfaca5a7c35c718179defbcabd9a0886
   subpackages:
   - auth/authpb
   - client
@@ -64,7 +64,7 @@ imports:
   - runtime/internal
   - utilities
 - name: github.com/hashicorp/hcl
-  version: 7fa7fff964d035e8a162cce3a164b3ad02ad651b
+  version: a4b07c25de5ff55ad3b8936cea69a79a3d95a855
   subpackages:
   - hcl/ast
   - hcl/parser
@@ -89,7 +89,7 @@ imports:
 - name: github.com/pelletier/go-buffruneio
   version: c37440a7cf42ac63b919c752ca73a85067e05992
 - name: github.com/pelletier/go-toml
-  version: fe206efb84b2bc8e8cfafe6b4c1826622be969e3
+  version: 23f644976aa7c724adf4aec911dadf4af17840ab
 - name: github.com/prometheus/client_golang
   version: c5b7fccd204277076155f10851dad72b76a49317
   subpackages:
@@ -100,13 +100,13 @@ imports:
   subpackages:
   - go
 - name: github.com/prometheus/common
-  version: 9e0844febd9e2856f839c9cb974fbd676d1755a8
+  version: 13ba4ddd0caa9c28ca7b7bffe1dfa9ed8d5ef207
   subpackages:
   - expfmt
   - internal/bitbucket.org/ww/goautoneg
   - model
 - name: github.com/prometheus/procfs
-  version: 332f6238064950a97bc3ed3f5421f6418537e707
+  version: d098ca18df8bc825079013daf7bacefbb1ee877e
   subpackages:
   - xfs
 - name: github.com/spf13/afero
@@ -140,11 +140,11 @@ imports:
   - publicsuffix
   - trace
 - name: golang.org/x/sys
-  version: ea9bcade75cb975a0b9738936568ab388b845617
+  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: a9a820217f98f7c8a207ec1e45a874e1fe12c478
+  version: 2910a502d2bf9e43193af9d68ca516529614eed3
   subpackages:
   - transform
   - unicode/norm

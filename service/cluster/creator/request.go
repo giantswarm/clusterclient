@@ -7,8 +7,8 @@ import (
 
 // Request is the configuration for the service action.
 type Request struct {
-	Name string `json:"name,omitempty"`
-
+	ID    string `json:"id"`
+	Name  string `json:"name,omitempty"`
 	Owner string `json:"owner,omitempty"`
 
 	KubernetesVersion string `json:"kubernetes_version,omitempty"`
@@ -22,8 +22,8 @@ type Request struct {
 // DefaultRequest provides a default request object by best effort.
 func DefaultRequest() Request {
 	return Request{
-		Name: "",
-
+		ID:    "",
+		Name:  "",
 		Owner: "",
 
 		KubernetesVersion: "",

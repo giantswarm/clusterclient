@@ -111,7 +111,9 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 		}
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", res.StatusCode()), "service", Name)
 
-		if res.StatusCode() != http.StatusCreated {
+		if res.StatusCode() == http.StatusBadRequest {
+			return nil, maskAnyf(invalidRequestError, string(res.Body()))
+		} else if res.StatusCode() != http.StatusCreated {
 			return nil, maskAny(fmt.Errorf(string(res.Body())))
 		}
 

@@ -113,6 +113,7 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 
 		if res.StatusCode() == http.StatusBadRequest {
 			return nil, maskAnyf(invalidRequestError, string(res.Body()))
+			fmt.Println("yolo!!")
 		} else if res.StatusCode() != http.StatusCreated {
 			return nil, maskAny(fmt.Errorf(string(res.Body())))
 		}

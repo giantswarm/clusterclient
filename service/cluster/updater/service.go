@@ -95,20 +95,20 @@ func (s *Service) Update(ctx context.Context, request Request) (*Response, error
 	}
 	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
-	if res.StatusCode() == http.StatusBadRequest {
+	if r.StatusCode() == http.StatusBadRequest {
 		responseError := struct {
 			Code  string
 			Error string
 		}{}
 
-		parseErr := json.Unmarshal(res.Body(), &responseError)
+		parseErr := json.Unmarshal(r.Body(), &responseError)
 		if parseErr != nil {
-			return nil, maskAnyf(invalidRequestError, string(res.Body()))
+			return nil, maskAnyf(invalidRequestError, string(r.Body()))
 		}
 
 		return nil, maskAnyf(invalidRequestError, responseError.Error)
-	} else if res.StatusCode() != http.StatusCreated {
-		return nil, maskAny(fmt.Errorf(string(res.Body())))
+	} else if r.StatusCode() != http.StatusCreated {
+		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 
 	response := r.Result().(*Response)

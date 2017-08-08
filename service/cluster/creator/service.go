@@ -1,6 +1,7 @@
 package creator
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -112,8 +113,19 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", res.StatusCode()), "service", Name)
 
 		if res.StatusCode() == http.StatusBadRequest {
-			return nil, maskAnyf(invalidRequestError, string(res.Body()))
-			fmt.Println("yolo!!")
+			responseError := microserver.ResponseError{}
+			parseErr := json.Unmarshal(res.Body(), &responseError)
+			if parseErr != nil {
+				return nil, maskAny(invalidRequestError, fmt.Errorf(string(res.Body())))
+			}
+
+			fmt.Println("================")
+			fmt.Println(responseError.Code)
+			fmt.Println(responseError.Error())
+			fmt.Println(responseError.Message)
+			fmt.Println("================")
+
+			return nil, maskAny(invalidRequestError, responseError)
 		} else if res.StatusCode() != http.StatusCreated {
 			return nil, maskAny(fmt.Errorf(string(res.Body())))
 		}

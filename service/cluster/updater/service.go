@@ -1,6 +1,7 @@
 package updater
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -94,10 +95,20 @@ func (s *Service) Update(ctx context.Context, request Request) (*Response, error
 	}
 	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
-	if r.StatusCode() == http.StatusNotFound {
-		return nil, maskAny(notFoundError)
-	} else if r.StatusCode() != http.StatusOK {
-		return nil, maskAny(fmt.Errorf(string(r.Body())))
+	if res.StatusCode() == http.StatusBadRequest {
+		responseError := struct {
+			Code  string
+			Error string
+		}{}
+
+		parseErr := json.Unmarshal(res.Body(), &responseError)
+		if parseErr != nil {
+			return nil, maskAnyf(invalidRequestError, string(res.Body()))
+		}
+
+		return nil, maskAnyf(invalidRequestError, responseError.Error)
+	} else if res.StatusCode() != http.StatusCreated {
+		return nil, maskAny(fmt.Errorf(string(res.Body())))
 	}
 
 	response := r.Result().(*Response)

@@ -4,6 +4,11 @@ import (
 	"github.com/giantswarm/clusterclient/service/cluster/creator/response"
 )
 
+type responseError struct {
+	Code  string
+	Error string
+}
+
 // Response is the return value of the service action.
 type Response struct {
 	Cluster response.Cluster `json:"cluster"`

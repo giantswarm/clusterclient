@@ -113,10 +113,7 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", res.StatusCode()), "service", Name)
 
 		if res.StatusCode() == http.StatusBadRequest {
-			responseError := struct {
-				Code  string
-				Error string
-			}{}
+			responseError := responseError{}
 
 			parseErr := json.Unmarshal(res.Body(), &responseError)
 			if parseErr != nil {

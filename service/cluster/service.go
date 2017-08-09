@@ -3,6 +3,7 @@ package cluster
 import (
 	"net/url"
 
+	"github.com/giantswarm/microerror"
 	micrologger "github.com/giantswarm/microkit/logger"
 	"github.com/go-resty/resty"
 
@@ -61,7 +62,7 @@ func New(config Config) (*Service, error) {
 		creatorConfig.URL = config.URL
 		creatorService, err = creator.New(creatorConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -73,7 +74,7 @@ func New(config Config) (*Service, error) {
 		deleterConfig.URL = config.URL
 		deleterService, err = deleter.New(deleterConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -85,7 +86,7 @@ func New(config Config) (*Service, error) {
 		listerConfig.URL = config.URL
 		listerService, err = lister.New(listerConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -97,7 +98,7 @@ func New(config Config) (*Service, error) {
 		searcherConfig.URL = config.URL
 		searcherService, err = searcher.New(searcherConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -108,7 +109,7 @@ func New(config Config) (*Service, error) {
 		updaterConfig.URL = config.URL
 		updaterService, err = updater.New(updaterConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 

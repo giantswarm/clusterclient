@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/giantswarm/microerror"
 	micrologger "github.com/giantswarm/microkit/logger"
 	microserver "github.com/giantswarm/microkit/server"
 	transactionid "github.com/giantswarm/microkit/transaction/context/id"
@@ -64,15 +65,15 @@ func DefaultConfig() Config {
 func New(config Config) (*Service, error) {
 	// Dependencies.
 	if config.Logger == nil {
-		return nil, maskAnyf(invalidConfigError, "logger must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "logger must not be empty")
 	}
 	if config.RestClient == nil {
-		return nil, maskAnyf(invalidConfigError, "rest client must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "rest client must not be empty")
 	}
 
 	// Settings.
 	if config.URL == nil {
-		return nil, maskAnyf(invalidConfigError, "URL must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "URL must not be empty")
 	}
 
 	newService := &Service{
@@ -102,13 +103,13 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 
 		u, err := s.URL.Parse(Endpoint)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("sending POST request to %s", u.String()), "service", Name)
 
 		res, err := req.Post(u.String())
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", res.StatusCode()), "service", Name)
 
@@ -117,12 +118,12 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 
 			parseErr := json.Unmarshal(res.Body(), &responseError)
 			if parseErr != nil {
-				return nil, maskAnyf(invalidRequestError, string(res.Body()))
+				return nil, microerror.Maskf(invalidRequestError, string(res.Body()))
 			}
 
-			return nil, maskAnyf(invalidRequestError, responseError.Error)
+			return nil, microerror.Maskf(invalidRequestError, responseError.Error)
 		} else if res.StatusCode() != http.StatusCreated {
-			return nil, maskAny(fmt.Errorf(string(res.Body())))
+			return nil, microerror.Mask(fmt.Errorf(string(res.Body())))
 		}
 
 		resourceLocation = res.Header().Get("Location")
@@ -135,19 +136,19 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 	{
 		u, err := s.URL.Parse(resourceLocation)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("sending GET request to %s", u.String()), "service", Name)
 		r, err := s.RestClient.R().SetResult(searcher.DefaultResponse()).Get(u.String())
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
 		if r.StatusCode() == http.StatusNotFound {
-			return nil, maskAny(notFoundError)
+			return nil, microerror.Mask(notFoundError)
 		} else if r.StatusCode() != http.StatusOK {
-			return nil, maskAny(fmt.Errorf(string(r.Body())))
+			return nil, microerror.Mask(fmt.Errorf(string(r.Body())))
 		}
 
 		clientResponse := r.Result().(*searcher.Response)

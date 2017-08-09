@@ -29,6 +29,13 @@ func IsInvalidConfig(err error) bool {
 	return errgo.Cause(err) == invalidConfigError
 }
 
+var invalidRequestError = errgo.New("invalid request")
+
+// IsInvalidRequest asserts invalidRequestError.
+func IsInvalidRequest(err error) bool {
+	return errgo.Cause(err) == invalidRequestError
+}
+
 var notFoundError = errgo.New("not found")
 
 // IsNotFound asserts notFoundError.

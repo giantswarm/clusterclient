@@ -1,6 +1,7 @@
 package creator
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -111,7 +112,16 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 		}
 		s.Logger.Log("debug", fmt.Sprintf("received status code %d", res.StatusCode()), "service", Name)
 
-		if res.StatusCode() != http.StatusCreated {
+		if res.StatusCode() == http.StatusBadRequest {
+			responseError := responseError{}
+
+			parseErr := json.Unmarshal(res.Body(), &responseError)
+			if parseErr != nil {
+				return nil, maskAnyf(invalidRequestError, string(res.Body()))
+			}
+
+			return nil, maskAnyf(invalidRequestError, responseError.Error)
+		} else if res.StatusCode() != http.StatusCreated {
 			return nil, maskAny(fmt.Errorf(string(res.Body())))
 		}
 

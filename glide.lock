@@ -1,5 +1,5 @@
-hash: 7e7d34ba6a4a8a6dc2bd056eceec108f21b62c61e8a72bb5b6c6a5fd6180cea6
-updated: 2017-08-09T14:03:32.765709017+08:00
+hash: 3bd8b2f41ae688a22bb8464b0cb300b8f49ebb05ca82d3ea8833d7d989f36dd6
+updated: 2017-08-09T16:33:35.322922748+08:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
@@ -95,13 +95,13 @@ imports:
   subpackages:
   - go
 - name: github.com/prometheus/common
-  version: 61f87aac8082fa8c3c5655c7608d7478d46ac2ad
+  version: 49fee292b27bfff7f354ee0f64e1bc4850462edf
   subpackages:
   - expfmt
   - internal/bitbucket.org/ww/goautoneg
   - model
 - name: github.com/prometheus/procfs
-  version: e645f4e5aaa8506fc71d6edbc5c4ff02c04c46f2
+  version: a1dba9ce8baed984a2495b658c82687f8157b98f
   subpackages:
   - xfs
 - name: github.com/spf13/afero
@@ -134,7 +134,7 @@ imports:
   - publicsuffix
   - trace
 - name: golang.org/x/sys
-  version: b0e0dd72976dc482b6cb37c5640440f876ac1907
+  version: e48874b42435b4347fc52bdee0424a52abc974d7
   subpackages:
   - unix
 - name: golang.org/x/text

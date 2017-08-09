@@ -6,7 +6,7 @@ import (
 	"net/url"
 
 	"github.com/giantswarm/microerror"
-	micrologger "github.com/giantswarm/microkit/logger"
+	"github.com/giantswarm/micrologger"
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/cluster"

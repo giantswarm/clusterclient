@@ -7,9 +7,9 @@ import (
 	"net/url"
 
 	"github.com/giantswarm/microerror"
-	micrologger "github.com/giantswarm/microkit/logger"
 	microserver "github.com/giantswarm/microkit/server"
 	transactionid "github.com/giantswarm/microkit/transaction/context/id"
+	"github.com/giantswarm/micrologger"
 	"github.com/go-resty/resty"
 	"golang.org/x/net/context"
 

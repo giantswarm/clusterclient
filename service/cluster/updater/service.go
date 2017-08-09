@@ -104,7 +104,7 @@ func (s *Service) Update(ctx context.Context, request Request) (*Response, error
 		}
 
 		return nil, maskAnyf(invalidRequestError, responseError.Error)
-	} else if r.StatusCode() != http.StatusCreated {
+	} else if r.StatusCode() != http.StatusOK {
 		return nil, maskAny(fmt.Errorf(string(r.Body())))
 	}
 

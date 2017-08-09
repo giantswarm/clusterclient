@@ -5,7 +5,8 @@ package clusterclient
 import (
 	"net/url"
 
-	micrologger "github.com/giantswarm/microkit/logger"
+	"github.com/giantswarm/microerror"
+	"github.com/giantswarm/micrologger"
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/cluster"
@@ -53,12 +54,12 @@ func DefaultConfig() Config {
 func New(config Config) (*Client, error) {
 	// Settings.
 	if config.Address == "" {
-		return nil, maskAnyf(invalidConfigError, "address must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "address must not be empty")
 	}
 
 	u, err := url.Parse(config.Address)
 	if err != nil {
-		return nil, maskAny(err)
+		return nil, microerror.Mask(err)
 	}
 
 	var clusterService *cluster.Service
@@ -69,7 +70,7 @@ func New(config Config) (*Client, error) {
 		clusterConfig.URL = u
 		clusterService, err = cluster.New(clusterConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -81,7 +82,7 @@ func New(config Config) (*Client, error) {
 		keypairConfig.URL = u
 		keypairService, err = keypair.New(keypairConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -92,7 +93,7 @@ func New(config Config) (*Client, error) {
 		rootConfig.URL = u
 		rootService, err = root.New(rootConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 

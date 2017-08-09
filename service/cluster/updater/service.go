@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"net/url"
 
-	micrologger "github.com/giantswarm/microkit/logger"
+	"github.com/giantswarm/microerror"
+	"github.com/giantswarm/micrologger"
 	"github.com/go-resty/resty"
 	"golang.org/x/net/context"
 )
@@ -60,15 +61,15 @@ func DefaultConfig() Config {
 func New(config Config) (*Service, error) {
 	// Dependencies.
 	if config.Logger == nil {
-		return nil, maskAnyf(invalidConfigError, "logger must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "logger must not be empty")
 	}
 	if config.RestClient == nil {
-		return nil, maskAnyf(invalidConfigError, "rest client must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "rest client must not be empty")
 	}
 
 	// Settings.
 	if config.URL == nil {
-		return nil, maskAnyf(invalidConfigError, "URL must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "URL must not be empty")
 	}
 
 	newService := &Service{
@@ -85,13 +86,13 @@ type Service struct {
 func (s *Service) Update(ctx context.Context, request Request) (*Response, error) {
 	u, err := s.URL.Parse(fmt.Sprintf(Endpoint, request.Cluster.ID))
 	if err != nil {
-		return nil, maskAny(err)
+		return nil, microerror.Mask(err)
 	}
 
 	s.Logger.Log("debug", fmt.Sprintf("sending PATCH request to %s", u.String()), "service", Name)
 	r, err := s.RestClient.R().SetBody(request.Cluster.Patch).SetResult(DefaultResponse()).Patch(u.String())
 	if err != nil {
-		return nil, maskAny(err)
+		return nil, microerror.Mask(err)
 	}
 	s.Logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
@@ -100,12 +101,12 @@ func (s *Service) Update(ctx context.Context, request Request) (*Response, error
 
 		parseErr := json.Unmarshal(r.Body(), &responseError)
 		if parseErr != nil {
-			return nil, maskAnyf(invalidRequestError, string(r.Body()))
+			return nil, microerror.Maskf(invalidRequestError, string(r.Body()))
 		}
 
-		return nil, maskAnyf(invalidRequestError, responseError.Error)
+		return nil, microerror.Maskf(invalidRequestError, responseError.Error)
 	} else if r.StatusCode() != http.StatusOK {
-		return nil, maskAny(fmt.Errorf(string(r.Body())))
+		return nil, microerror.Mask(fmt.Errorf(string(r.Body())))
 	}
 
 	response := r.Result().(*Response)

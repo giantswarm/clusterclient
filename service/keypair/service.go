@@ -3,7 +3,8 @@ package keypair
 import (
 	"net/url"
 
-	micrologger "github.com/giantswarm/microkit/logger"
+	"github.com/giantswarm/microerror"
+	"github.com/giantswarm/micrologger"
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/keypair/creator"
@@ -58,7 +59,7 @@ func New(config Config) (*Service, error) {
 		creatorConfig.URL = config.URL
 		creatorService, err = creator.New(creatorConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 
@@ -70,7 +71,7 @@ func New(config Config) (*Service, error) {
 		listerConfig.URL = config.URL
 		listerService, err = lister.New(listerConfig)
 		if err != nil {
-			return nil, maskAny(err)
+			return nil, microerror.Mask(err)
 		}
 	}
 

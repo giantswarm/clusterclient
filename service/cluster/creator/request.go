@@ -7,30 +7,24 @@ import (
 
 // Request is the configuration for the service action.
 type Request struct {
-	Name string `json:"name,omitempty"`
-
-	Owner string `json:"owner,omitempty"`
-
-	KubernetesVersion string `json:"kubernetes_version,omitempty"`
-
-	AWS aws.Cluster `json:"aws,omitempty"`
-
-	Masters []request.Master `json:"masters,omitempty"`
-	Workers []request.Worker `json:"workers,omitempty"`
+	AWS               aws.Cluster      `json:"aws,omitempty"`
+	KubernetesVersion string           `json:"kubernetes_version,omitempty"`
+	Masters           []request.Master `json:"masters,omitempty"`
+	Name              string           `json:"name,omitempty"`
+	Owner             string           `json:"owner,omitempty"`
+	ReleaseVersion    string           `json:"release_version,omitempty"`
+	Workers           []request.Worker `json:"workers,omitempty"`
 }
 
 // DefaultRequest provides a default request object by best effort.
 func DefaultRequest() Request {
 	return Request{
-		Name: "",
-
-		Owner: "",
-
+		AWS:               aws.DefaultCluster(),
 		KubernetesVersion: "",
-
-		AWS: aws.DefaultCluster(),
-
-		Masters: []request.Master{},
-		Workers: []request.Worker{},
+		Masters:           []request.Master{},
+		Name:              "",
+		Owner:             "",
+		ReleaseVersion:    "",
+		Workers:           []request.Worker{},
 	}
 }

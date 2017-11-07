@@ -61,6 +61,10 @@ func DefaultConfig() Config {
 	return config
 }
 
+type Service struct {
+	Config
+}
+
 // New creates a new configured creator service.
 func New(config Config) (*Service, error) {
 	// Dependencies.
@@ -81,10 +85,6 @@ func New(config Config) (*Service, error) {
 	}
 
 	return newService, nil
-}
-
-type Service struct {
-	Config
 }
 
 func (s *Service) Create(ctx context.Context, request Request) (*Response, error) {

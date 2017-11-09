@@ -11,6 +11,7 @@ import (
 
 	"github.com/giantswarm/clusterclient/service/cluster"
 	"github.com/giantswarm/clusterclient/service/keypair"
+	"github.com/giantswarm/clusterclient/service/release"
 	"github.com/giantswarm/clusterclient/service/root"
 )
 
@@ -50,9 +51,14 @@ func DefaultConfig() Config {
 	return config
 }
 
-// New creates a new configured client.
+type Client struct {
+	Cluster *cluster.Service
+	KeyPair *keypair.Service
+	Release *release.Release
+	Root    *root.Service
+}
+
 func New(config Config) (*Client, error) {
-	// Settings.
 	if config.Address == "" {
 		return nil, microerror.Maskf(invalidConfigError, "address must not be empty")
 	}
@@ -86,6 +92,21 @@ func New(config Config) (*Client, error) {
 		}
 	}
 
+	var releaseService *release.Release
+	{
+		c := release.DefaultConfig()
+
+		c.Logger = config.Logger
+		c.RestClient = config.RestClient
+
+		c.URL = u
+
+		releaseService, err = release.New(c)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
 	var rootService *root.Service
 	{
 		rootConfig := root.DefaultConfig()
@@ -100,14 +121,9 @@ func New(config Config) (*Client, error) {
 	newClient := &Client{
 		Cluster: clusterService,
 		KeyPair: keypairService,
+		Release: releaseService,
 		Root:    rootService,
 	}
 
 	return newClient, nil
-}
-
-type Client struct {
-	Cluster *cluster.Service
-	KeyPair *keypair.Service
-	Root    *root.Service
 }

@@ -2,8 +2,9 @@ package: github.com/giantswarm/clusterclient
 import:
 - package: github.com/go-resty/resty
   version: 1.0.0
-- package: github.com/juju/errgo
 - package: github.com/giantswarm/microerror
   version: master
 - package: github.com/giantswarm/micrologger
+  version: master
+- package: github.com/giantswarm/versionbundle
   version: master

@@ -61,12 +61,12 @@ func New(config Config) (*Searcher, error) {
 	return s, nil
 }
 
-func (s *Searcher) List(ctx context.Context) (Response, error) {
+func (s *Searcher) Search(ctx context.Context, request Request) (Response, error) {
 	var err error
 
 	var u *url.URL
 	{
-		u, err = s.url.Parse(Endpoint)
+		u, err = s.url.Parse(fmt.Sprintf(Endpoint, request.ReleaseVersion))
 		if err != nil {
 			return Response{}, microerror.Mask(err)
 		}

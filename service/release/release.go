@@ -8,6 +8,7 @@ import (
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/release/lister"
+	"github.com/giantswarm/clusterclient/service/release/searcher"
 )
 
 type Config struct {
@@ -27,7 +28,8 @@ func DefaultConfig() Config {
 }
 
 type Release struct {
-	Lister *lister.Lister
+	Lister   *lister.Lister
+	Searcher *searcher.Searcher
 }
 
 func New(config Config) (*Release, error) {
@@ -48,8 +50,24 @@ func New(config Config) (*Release, error) {
 		}
 	}
 
+	var newSearcher *searcher.Searcher
+	{
+		c := searcher.DefaultConfig()
+
+		c.Logger = config.Logger
+		c.RestClient = config.RestClient
+
+		c.URL = config.URL
+
+		newSearcher, err = searcher.New(c)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
 	r := &Release{
-		Lister: newLister,
+		Lister:   newLister,
+		Searcher: newSearcher,
 	}
 
 	return r, nil

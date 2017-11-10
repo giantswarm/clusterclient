@@ -1,5 +1,5 @@
 hash: eeda1f0a73857d915efd0efff743eea9bc019fe56e57a5852241a315bbe786a7
-updated: 2017-11-10T10:11:34.487021906+01:00
+updated: 2017-11-10T15:24:46.905850918+01:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
@@ -40,7 +40,7 @@ imports:
 - name: github.com/go-stack/stack
   version: 100eb0c0a9c5b306ca2fb4f165df21d80ada4b82
 - name: github.com/golang/protobuf
-  version: 4bd1920723d7b7c925de087aa32e2187708897f7
+  version: 1643683e1b54a9e88ad26d98f81400c8c9d9f4f9
   subpackages:
   - proto
 - name: github.com/gorilla/context
@@ -106,7 +106,7 @@ imports:
 - name: github.com/tylerb/graceful
   version: 4654dfbb6ad53cb5e27f37d99b02e16c1872fbbb
 - name: golang.org/x/net
-  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
+  version: a337091b0525af65de94df2eb7e98bd9962dcbe2
   subpackages:
   - context
   - publicsuffix
@@ -115,11 +115,11 @@ imports:
   subpackages:
   - errgroup
 - name: golang.org/x/sys
-  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
+  version: 1e2299c37cc91a509f1b12369872d27be0ce98a6
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: 2910a502d2bf9e43193af9d68ca516529614eed3
+  version: 88f656faf3f37f690df1a32515b479415e1a6769
   subpackages:
   - transform
   - unicode/norm

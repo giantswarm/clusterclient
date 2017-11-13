@@ -14,7 +14,7 @@ type Request struct {
 	Name              string                 `json:"name,omitempty"`
 	Owner             string                 `json:"owner,omitempty"`
 	ReleaseVersion    string                 `json:"release_version,omitempty"`
-	VersionBundles    []versionbundle.Bundle `json:"version_bundle,omitempty"`
+	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`
 	Workers           []request.Worker       `json:"workers,omitempty"`
 }
 

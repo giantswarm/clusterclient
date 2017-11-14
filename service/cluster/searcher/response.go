@@ -3,42 +3,40 @@ package searcher
 import (
 	"time"
 
+	"github.com/giantswarm/versionbundle"
+
 	"github.com/giantswarm/clusterclient/service/cluster/searcher/response"
 	"github.com/giantswarm/clusterclient/service/cluster/searcher/response/aws"
 )
 
 // Response is the return value of the service action.
 type Response struct {
-	APIEndpoint string    `json:"api_endpoint"`
-	CreateDate  time.Time `json:"create_date"`
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
-
-	Owner string `json:"owner"`
-
-	KubernetesVersion string `json:"kubernetes_version"`
-
-	AWS aws.Cluster `json:"aws,omitempty"`
-
-	Masters []response.Master `json:"masters"`
-	Workers []response.Worker `json:"workers"`
+	APIEndpoint       string                 `json:"api_endpoint"`
+	AWS               aws.Cluster            `json:"aws,omitempty"`
+	CreateDate        time.Time              `json:"create_date"`
+	ID                string                 `json:"id"`
+	KubernetesVersion string                 `json:"kubernetes_version,omitempty"`
+	Masters           []response.Master      `json:"masters,omitempty"`
+	Name              string                 `json:"name,omitempty"`
+	Owner             string                 `json:"owner,omitempty"`
+	ReleaseVersion    string                 `json:"release_version,omitempty"`
+	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`
+	Workers           []response.Worker      `json:"workers,omitempty"`
 }
 
-// DefaultResponse provides a default response object by best effort.
+// DefaultResponse provides a default response by best effort.
 func DefaultResponse() *Response {
 	return &Response{
-		APIEndpoint: "",
-		CreateDate:  time.Time{},
-		ID:          "",
-		Name:        "",
-
-		Owner: "",
-
+		APIEndpoint:       "",
+		AWS:               aws.DefaultCluster(),
+		CreateDate:        time.Time{},
+		ID:                "",
 		KubernetesVersion: "",
-
-		AWS: aws.DefaultCluster(),
-
-		Masters: []response.Master{},
-		Workers: []response.Worker{},
+		Masters:           []response.Master{},
+		Name:              "",
+		Owner:             "",
+		ReleaseVersion:    "",
+		VersionBundles:    []versionbundle.Bundle{},
+		Workers:           []response.Worker{},
 	}
 }

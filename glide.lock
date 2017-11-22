@@ -1,5 +1,5 @@
 hash: eeda1f0a73857d915efd0efff743eea9bc019fe56e57a5852241a315bbe786a7
-updated: 2017-11-10T15:24:46.905850918+01:00
+updated: 2017-11-22T18:23:42.726535054+01:00
 imports:
 - name: github.com/beorn7/perks
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
@@ -12,7 +12,7 @@ imports:
 - name: github.com/fsnotify/fsnotify
   version: 4da3e2cfbabc9f751898f250b49f2439785783a1
 - name: github.com/giantswarm/microerror
-  version: 5ade94eb4ee35ef72eb9382228470caeddb29989
+  version: ec5f66bb657662031c0d651504fee6908cdf28d9
 - name: github.com/giantswarm/microkit
   version: e6c3aafd2c6b8298599dc465dc1294fbd025d2f1
   subpackages:
@@ -22,11 +22,13 @@ imports:
   - transaction/context/id
   - transaction/context/tracked
 - name: github.com/giantswarm/micrologger
-  version: 954d1261928bbb50dc917c629edf0b71db6a1527
+  version: c2ffba36495025eff48982e6543397dbc4da0ac6
+  subpackages:
+  - loggercontext
 - name: github.com/giantswarm/microstorage
   version: 99418478ec8f5c68f9b5fc5e6be7e0474948f80d
 - name: github.com/giantswarm/versionbundle
-  version: 6f255fb054b68827f115fdf6a018b5e66c863250
+  version: 3b7cd23ec96043f5193c1b6c966fade961f0da65
 - name: github.com/go-kit/kit
   version: a9ca6725cbbea455e61c6bc8a1ed28e81eb3493b
   subpackages:
@@ -40,7 +42,7 @@ imports:
 - name: github.com/go-stack/stack
   version: 100eb0c0a9c5b306ca2fb4f165df21d80ada4b82
 - name: github.com/golang/protobuf
-  version: 1643683e1b54a9e88ad26d98f81400c8c9d9f4f9
+  version: 4bd1920723d7b7c925de087aa32e2187708897f7
   subpackages:
   - proto
 - name: github.com/gorilla/context
@@ -78,11 +80,11 @@ imports:
   - prometheus
   - prometheus/promhttp
 - name: github.com/prometheus/client_model
-  version: 6f3806018612930941127f2a7c6c453ba2c527d2
+  version: 99fa1f4be8e564e8a6b613da7fa6f46c9edafc6c
   subpackages:
   - go
 - name: github.com/prometheus/common
-  version: e3fb1a1acd7605367a2b378bc2e2f893c05174b7
+  version: 2e54d0b93cba2fd133edc32211dcc32c06ef72ca
   subpackages:
   - expfmt
   - internal/bitbucket.org/ww/goautoneg
@@ -92,7 +94,7 @@ imports:
   subpackages:
   - xfs
 - name: github.com/spf13/afero
-  version: 5660eeed305fe5f69c8fc6cf899132a459a97064
+  version: 8d919cbe7e2627e417f3e45c3c0e489a5b7e2536
   subpackages:
   - mem
 - name: github.com/spf13/cast
@@ -100,13 +102,13 @@ imports:
 - name: github.com/spf13/jwalterweatherman
   version: 12bd96e66386c1960ab0f74ced1362f66f552f7b
 - name: github.com/spf13/pflag
-  version: 4c012f6dcd9546820e378d0bdda4d8fc772cdfea
+  version: 97afa5e7ca8a08a383cb259e06636b5e2cc7897f
 - name: github.com/spf13/viper
   version: 4dddf7c62e16bce5807744018f5b753bfe21bbd2
 - name: github.com/tylerb/graceful
   version: 4654dfbb6ad53cb5e27f37d99b02e16c1872fbbb
 - name: golang.org/x/net
-  version: a337091b0525af65de94df2eb7e98bd9962dcbe2
+  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
   subpackages:
   - context
   - publicsuffix
@@ -115,14 +117,14 @@ imports:
   subpackages:
   - errgroup
 - name: golang.org/x/sys
-  version: 1e2299c37cc91a509f1b12369872d27be0ce98a6
+  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: 88f656faf3f37f690df1a32515b479415e1a6769
+  version: 2910a502d2bf9e43193af9d68ca516529614eed3
   subpackages:
   - transform
   - unicode/norm
 - name: gopkg.in/yaml.v2
-  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
+  version: 53feefa2559fb8dfa8d81baad31be332c97d6c77
 testImports: []

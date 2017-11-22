@@ -68,7 +68,7 @@ type Service struct {
 	Config
 }
 
-func (s *Service) List(ctx context.Context) (*Response, error) {
+func (s *Service) Info(ctx context.Context) (*Response, error) {
 	u, err := s.URL.Parse(Endpoint)
 	if err != nil {
 		return nil, microerror.Mask(err)

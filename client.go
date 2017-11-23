@@ -10,6 +10,7 @@ import (
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/cluster"
+	"github.com/giantswarm/clusterclient/service/info"
 	"github.com/giantswarm/clusterclient/service/keypair"
 	"github.com/giantswarm/clusterclient/service/release"
 	"github.com/giantswarm/clusterclient/service/root"
@@ -53,6 +54,7 @@ func DefaultConfig() Config {
 
 type Client struct {
 	Cluster *cluster.Service
+	Info    *info.Service
 	KeyPair *keypair.Service
 	Release *release.Release
 	Root    *root.Service
@@ -75,6 +77,18 @@ func New(config Config) (*Client, error) {
 		clusterConfig.RestClient = config.RestClient
 		clusterConfig.URL = u
 		clusterService, err = cluster.New(clusterConfig)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
+	var infoService *info.Service
+	{
+		infoConfig := info.DefaultConfig()
+		infoConfig.Logger = config.Logger
+		infoConfig.RestClient = config.RestClient
+		infoConfig.URL = u
+		infoService, err = info.New(infoConfig)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
@@ -120,6 +134,7 @@ func New(config Config) (*Client, error) {
 
 	newClient := &Client{
 		Cluster: clusterService,
+		Info:    infoService,
 		KeyPair: keypairService,
 		Release: releaseService,
 		Root:    rootService,

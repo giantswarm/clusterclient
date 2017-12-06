@@ -11,6 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: debugging
+          command: |
+            echo $CIRCLE_WORKING_DIRECTORY
+            find $CIRCLE_WORKING_DIRECTORY
+      - run:
           name: Copy source to right location
           command: |
             mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME

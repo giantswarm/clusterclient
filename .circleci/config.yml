@@ -11,13 +11,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: home dir content (debugging)
-          command: find .
-      - run:
           name: Copy source to right location
           command: |
             mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
-            cp -rf $HOME/$CIRCLE_PROJECT_REPONAME $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
+            cp -rf $(pwd) $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
       # tests
       - run:
           name: go test

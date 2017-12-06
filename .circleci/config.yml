@@ -11,21 +11,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install architect
-          command: |
-            LATEST_ARCHITECT_RELEASE=$(curl -sS -H "Authorization: token $RELEASE_TOKEN" https://api.github.com/repos/giantswarm/architect/releases/latest)
-            LATEST_ARCHITECT_URL=$(echo -n $LATEST_ARCHITECT_RELEASE | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
-            wget -q $LATEST_ARCHITECT_URL
-            chmod +x ./architect
-            ./architect version
-      - run:
           name: Copy source to right location
           command: |
             mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
             cp -rf $HOME/$CIRCLE_PROJECT_REPONAME $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
-      - run:
-          name: architect build
-          command: ./architect build
       # tests
       - run:
           name: go test
@@ -37,9 +26,3 @@ jobs:
           command: |
             cd $GS_WD
             go build -a -v -tags netgo -ldflags "-w"
-      - deploy:
-          name: architect deploy (master only)
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./architect deploy
-            fi

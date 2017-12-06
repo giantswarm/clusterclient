@@ -1,34 +1,24 @@
 version: 2
 jobs:
   build:
-    machine: true
-    environment:
-      - CGO_ENABLED: "0"
-        GOOS: linux
-        GOARCH: amd64
-        GOPATH: /home/circleci/go
-        GS_WD: /home/circleci/go/src/github.com/giantswarm/clusterclient
+    docker:
+      - image: circleci/golang:1.9
+        environment:
+          - CGO_ENABLED: "0"
+            GOOS: linux
+            GOARCH: amd64
+    working_directory: /go/src/github.com/giantswarm/clusterclient
     steps:
       - checkout
       - run:
           name: Debugging
           command: env|sort
-      - run:
-          name: Create target directory
-          command: |
-            mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
-      - run:
-          name: Copy source
-          command: |
-            cp -rf $HOME/project $GS_WD
       # tests
       - run:
           name: go test
           command: |
-            cd $GS_WD
             go test -v ./...
       - run:
           name: go build
           command: |
-            cd $GS_WD
             go build -a -v -tags netgo -ldflags "-w"

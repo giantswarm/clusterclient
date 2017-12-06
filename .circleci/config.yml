@@ -6,8 +6,8 @@ jobs:
       - CGO_ENABLED: "0"
         GOOS: linux
         GOARCH: amd64
-        GOPATH: $HOME/go
-        GS_WD: $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+        GOPATH: "${HOME}/go"
+        GS_WD: "${HOME}/go/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
     steps:
       - checkout
       - run:

@@ -11,6 +11,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Debugging
+          command: env|sort
+      - run:
           name: Create target directory
           command: |
             mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME

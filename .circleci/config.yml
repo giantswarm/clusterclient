@@ -3,28 +3,40 @@ jobs:
   build:
     machine: true
     environment:
-      CGO_ENABLED: "0"
-      GOOS: "linux"
-      GOARCH: "amd64"
-      GOPATH: "$HOME/go"
-      GS_WD: "$HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+      - CGO_ENABLED: "0"
+        GOOS: "linux"
+        GOARCH: "amd64"
+        GOPATH: "$HOME/go"
+        GS_WD: "$HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
     steps:
       - checkout
-      - run: |
-          wget -q $(curl -sS -H "Authorization: token $RELEASE_TOKEN" https://api.github.com/repos/giantswarm/architect/releases/latest | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
-          chmod +x ./architect
-          ./architect version
-      - run: mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
-      - run: cp -rf $HOME/$CIRCLE_PROJECT_REPONAME $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
-      - run: ./architect build
+      - run:
+          name: Install architect
+          command: |
+            wget -q $(curl -sS -H "Authorization: token $RELEASE_TOKEN" https://api.github.com/repos/giantswarm/architect/releases/latest | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
+            chmod +x ./architect
+            ./architect version
+      - run:
+          name: Copy source to right location
+          command: |
+            mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
+            cp -rf $HOME/$CIRCLE_PROJECT_REPONAME $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
+      - run:
+          name: architect build
+          command: ./architect build
       # tests
-      - run: |
-          cd $GS_WD
-          go test -v ./...
-      - run: |
-          cd $GS_WD
-          go build -a -v -tags netgo -ldflags "-w"
+      - run:
+          name: go test
+          command: |
+            cd $GS_WD
+            go test -v ./...
+      - run:
+          name: go build
+          command: |
+            cd $GS_WD
+            go build -a -v -tags netgo -ldflags "-w"
       - deploy:
+          name: architect deploy (master only)
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ./architect deploy

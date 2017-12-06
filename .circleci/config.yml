@@ -7,14 +7,15 @@ jobs:
         GOOS: "linux"
         GOARCH: "amd64"
         GOPATH: "$HOME/go"
-        GS_WD: "$HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+        GS_WD: $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
     steps:
+      - run: env|sort
       - checkout
       - run:
           name: Copy source to right location
           command: |
-            mkdir -p $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
-            cp -rf $(pwd) $HOME/go/src/github.com/$CIRCLE_PROJECT_USERNAME
+            mkdir -p $(pwd)/go/src/github.com/$CIRCLE_PROJECT_USERNAME
+            cp -rf $(pwd) $(pwd)/go/src/github.com/$CIRCLE_PROJECT_USERNAME
       # tests
       - run:
           name: go test

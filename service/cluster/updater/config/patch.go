@@ -1,11 +1,14 @@
 package config
 
+import "github.com/giantswarm/versionbundle"
+
 // Patch is the cluster specific configuration.
 type Patch struct {
-	Name           string   `json:"name"`
-	Owner          string   `json:"owner"`
-	ReleaseVersion string   `json:"release_version,omitempty"`
-	Workers        []Worker `json:"workers,omitempty"`
+	Name           string                 `json:"name"`
+	Owner          string                 `json:"owner"`
+	ReleaseVersion string                 `json:"release_version,omitempty"`
+	VersionBundles []versionbundle.Bundle `json:"version_bundles,omitempty"`
+	Workers        []Worker               `json:"workers,omitempty"`
 }
 
 // DefaultPatch provides a default patch by best effort.
@@ -14,6 +17,7 @@ func DefaultPatch() Patch {
 		Name:           "",
 		Owner:          "",
 		ReleaseVersion: "",
+		VersionBundles: []versionbundle.Bundle{},
 		Workers:        []Worker{},
 	}
 }

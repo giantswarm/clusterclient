@@ -1,17 +1,19 @@
 package creator
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 
+	"github.com/go-resty/resty"
+
+	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
 	microserver "github.com/giantswarm/microkit/server"
 	transactionid "github.com/giantswarm/microkit/transaction/context/id"
 	"github.com/giantswarm/micrologger"
-	"github.com/go-resty/resty"
-	"golang.org/x/net/context"
 
 	"github.com/giantswarm/clusterclient/service/cluster/searcher"
 )
@@ -139,7 +141,7 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 			return nil, microerror.Mask(err)
 		}
 		s.Logger.Log("debug", fmt.Sprintf("sending GET request to %s", u.String()), "service", Name)
-		r, err := s.RestClient.R().SetResult(searcher.DefaultResponse()).Get(u.String())
+		r, err := microclient.Do(ctx, s.RestClient.R().SetResult(searcher.DefaultResponse()).Get, u.String())
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}

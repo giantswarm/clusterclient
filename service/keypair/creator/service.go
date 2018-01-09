@@ -1,13 +1,15 @@
 package creator
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 
+	"github.com/go-resty/resty"
+
+	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
-	"github.com/go-resty/resty"
-	"golang.org/x/net/context"
 )
 
 const (
@@ -88,7 +90,7 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 	}
 
 	s.Logger.Log("debug", fmt.Sprintf("sending POST request to %s", u.String()), "service", Name)
-	r, err := s.RestClient.R().SetBody(request.KeyPair).SetResult(DefaultResponse()).Post(u.String())
+	r, err := microclient.Do(ctx, s.RestClient.R().SetBody(request.KeyPair).SetResult(DefaultResponse()).Post, u.String())
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}

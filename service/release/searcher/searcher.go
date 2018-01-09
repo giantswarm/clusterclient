@@ -1,14 +1,16 @@
 package searcher
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
 
+	"github.com/go-resty/resty"
+
+	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
-	"github.com/go-resty/resty"
-	"golang.org/x/net/context"
 )
 
 const (
@@ -75,7 +77,7 @@ func (s *Searcher) Search(ctx context.Context, request Request) (Response, error
 	var response Response
 	{
 		s.logger.Log("debug", fmt.Sprintf("sending GET request to '%s'", u.String()), "service", Name)
-		r, err := s.restClient.R().SetResult(DefaultResponse()).Get(u.String())
+		r, err := microclient.Do(ctx, s.restClient.R().SetResult(DefaultResponse()).Get, u.String())
 		if err != nil {
 			return Response{}, microerror.Mask(err)
 		}

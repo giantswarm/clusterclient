@@ -1,14 +1,16 @@
 package lister
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
 
+	"github.com/go-resty/resty"
+
+	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
-	"github.com/go-resty/resty"
-	"golang.org/x/net/context"
 )
 
 const (
@@ -75,7 +77,7 @@ func (l *Lister) List(ctx context.Context) ([]Response, error) {
 	var response []Response
 	{
 		l.logger.Log("debug", fmt.Sprintf("sending GET request to '%s'", u.String()), "service", Name)
-		r, err := l.restClient.R().SetResult(DefaultResponse()).Get(u.String())
+		r, err := microclient.Do(ctx, l.restClient.R().SetResult(DefaultResponse()).Get, u.String())
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}

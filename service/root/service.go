@@ -20,57 +20,41 @@ const (
 
 // Config represents the configuration used to create a root service.
 type Config struct {
-	// Dependencies.
 	Logger     micrologger.Logger
 	RestClient *resty.Client
 
-	// Settings.
 	URL *url.URL
 }
 
 // DefaultConfig provides a default configuration to create a new root service
 // by best effort.
 func DefaultConfig() Config {
-	var err error
+	return Config{
+		Logger:     nil,
+		RestClient: nil,
 
-	var newLogger micrologger.Logger
-	{
-		loggerConfig := micrologger.DefaultConfig()
-		newLogger, err = micrologger.New(loggerConfig)
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	config := Config{
-		// Dependencies.
-		Logger:     newLogger,
-		RestClient: resty.New(),
-
-		// Settings.
 		URL: nil,
 	}
-
-	return config
 }
 
 // New creates a new configured root service.
 func New(config Config) (*Service, error) {
-	// Dependencies.
 	if config.Logger == nil {
-		return nil, microerror.Maskf(invalidConfigError, "logger must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "config.Logger must not be nil")
 	}
 	if config.RestClient == nil {
-		return nil, microerror.Maskf(invalidConfigError, "rest client must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "config.RestClient must not be nil")
 	}
 
-	// Settings.
 	if config.URL == nil {
-		return nil, microerror.Maskf(invalidConfigError, "URL must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "config.URL must not be nil")
 	}
 
 	newService := &Service{
-		Config: config,
+		logger:     config.Logger,
+		restClient: config.RestClient,
+
+		url: config.URL,
 	}
 
 	return newService, nil
@@ -78,16 +62,19 @@ func New(config Config) (*Service, error) {
 
 // Service implements the root service action.
 type Service struct {
-	Config
+	logger     micrologger.Logger
+	restClient *resty.Client
+
+	url *url.URL
 }
 
 func (s *Service) Get(ctx context.Context, request Request) (*Response, error) {
-	u, err := s.URL.Parse(Endpoint)
+	u, err := s.url.Parse(Endpoint)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
 
-	r, err := microclient.Do(ctx, s.RestClient.R().SetResult(DefaultResponse()).Get, u.String())
+	r, err := microclient.Do(ctx, s.restClient.R().SetResult(DefaultResponse()).Get, u.String())
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}

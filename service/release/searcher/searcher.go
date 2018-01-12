@@ -43,14 +43,14 @@ type Searcher struct {
 
 func New(config Config) (*Searcher, error) {
 	if config.Logger == nil {
-		return nil, microerror.Maskf(invalidConfigError, "logger must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "config.Logger must not be empty")
 	}
 	if config.RestClient == nil {
-		return nil, microerror.Maskf(invalidConfigError, "rest client must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "config.RestClient must not be empty")
 	}
 
 	if config.URL == nil {
-		return nil, microerror.Maskf(invalidConfigError, "URL must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "config.URL must not be empty")
 	}
 
 	s := &Searcher{

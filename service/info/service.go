@@ -24,27 +24,12 @@ type Config struct {
 // DefaultConfig provides a default configuration to create a new service by
 // best effort.
 func DefaultConfig() Config {
-	var err error
+	return Config{
+		Logger:     nil,
+		RestClient: nil,
 
-	var newLogger micrologger.Logger
-	{
-		loggerConfig := micrologger.DefaultConfig()
-		newLogger, err = micrologger.New(loggerConfig)
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	config := Config{
-		// Dependencies.
-		Logger:     newLogger,
-		RestClient: resty.New(),
-
-		// Settings.
 		URL: nil,
 	}
-
-	return config
 }
 
 type Service struct {
@@ -59,9 +44,11 @@ func New(config Config) (*Service, error) {
 	var awsService *aws.Service
 	{
 		awsConfig := aws.DefaultConfig()
+
 		awsConfig.Logger = config.Logger
 		awsConfig.RestClient = config.RestClient
 		awsConfig.URL = config.URL
+
 		awsService, err = aws.New(awsConfig)
 		if err != nil {
 			return nil, microerror.Mask(err)
@@ -71,9 +58,11 @@ func New(config Config) (*Service, error) {
 	var kvmService *kvm.Service
 	{
 		kvmConfig := kvm.DefaultConfig()
+
 		kvmConfig.Logger = config.Logger
 		kvmConfig.RestClient = config.RestClient
 		kvmConfig.URL = config.URL
+
 		kvmService, err = kvm.New(kvmConfig)
 		if err != nil {
 			return nil, microerror.Mask(err)

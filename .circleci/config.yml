@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+        environment:
+          - CGO_ENABLED: "0"
+            GOOS: linux
+            GOARCH: amd64
+    working_directory: /go/src/github.com/giantswarm/clusterclient
+    steps:
+      - checkout
+      - run:
+          name: Debugging
+          command: env|sort
+      # tests
+      - run:
+          name: go test
+          command: |
+            go test -v ./...
+      - run:
+          name: go build
+          command: |
+            go build -a -v -tags netgo -ldflags "-w"

@@ -4,6 +4,7 @@ package clusterclient
 
 import (
 	"net/url"
+	"time"
 
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
@@ -14,6 +15,14 @@ import (
 	"github.com/giantswarm/clusterclient/service/keypair"
 	"github.com/giantswarm/clusterclient/service/release"
 	"github.com/giantswarm/clusterclient/service/root"
+)
+
+const (
+	// DefaultRetryCount is the default number of times to retry a failed network call.
+	DefaultRetryCount = 5
+
+	// DefaultTimeout is the default timeout for network calls.
+	DefaultTimeout = 5 * time.Second
 )
 
 // Config represents the configuration used to create a new client.
@@ -40,10 +49,14 @@ func DefaultConfig() Config {
 		}
 	}
 
+	newRestyClient := resty.New().
+		SetTimeout(DefaultTimeout).
+		SetRetryCount(DefaultRetryCount)
+
 	config := Config{
 		// Dependencies.
 		Logger:     newLogger,
-		RestClient: resty.New(),
+		RestClient: newRestyClient,
 
 		// Settings.
 		Address: "http://127.0.0.1:8080",

@@ -11,8 +11,6 @@ import (
 
 	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
-	microserver "github.com/giantswarm/microkit/server"
-	transactionid "github.com/giantswarm/microkit/transaction/context/id"
 	"github.com/giantswarm/micrologger"
 
 	"github.com/giantswarm/clusterclient/service/cluster/searcher"
@@ -86,11 +84,6 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 	{
 		req := s.restClient.R()
 		req.SetBody(request)
-
-		transactionID, ok := transactionid.FromContext(ctx)
-		if ok {
-			req.SetHeader(microserver.TransactionIDHeader, transactionID)
-		}
 
 		u, err := s.url.Parse(Endpoint)
 		if err != nil {

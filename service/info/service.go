@@ -8,6 +8,7 @@ import (
 	"github.com/go-resty/resty"
 
 	"github.com/giantswarm/clusterclient/service/info/aws"
+	"github.com/giantswarm/clusterclient/service/info/azure"
 	"github.com/giantswarm/clusterclient/service/info/kvm"
 )
 
@@ -33,8 +34,9 @@ func DefaultConfig() Config {
 }
 
 type Service struct {
-	AWS *aws.Service
-	KVM *kvm.Service
+	AWS   *aws.Service
+	Azure *azure.Service
+	KVM   *kvm.Service
 }
 
 // New creates a new configured service object.
@@ -55,6 +57,20 @@ func New(config Config) (*Service, error) {
 		}
 	}
 
+	var azureService *azure.Service
+	{
+		azureConfig := azure.DefaultConfig()
+
+		azureConfig.Logger = config.Logger
+		azureConfig.RestClient = config.RestClient
+		azureConfig.URL = config.URL
+
+		azureService, err = azure.New(azureConfig)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
 	var kvmService *kvm.Service
 	{
 		kvmConfig := kvm.DefaultConfig()
@@ -70,8 +86,9 @@ func New(config Config) (*Service, error) {
 	}
 
 	newService := &Service{
-		AWS: awsService,
-		KVM: kvmService,
+		AWS:   awsService,
+		Azure: azureService,
+		KVM:   kvmService,
 	}
 
 	return newService, nil

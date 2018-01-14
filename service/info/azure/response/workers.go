@@ -2,7 +2,7 @@ package response
 
 type Workers struct {
 	CountPerCluster CountPerCluster `json:"count_per_cluster"`
-	VMSize    VMSize    `json:"vm_size,omitempty"`
+	VMSize          VMSize          `json:"vm_size,omitempty"`
 
 	// To be implemented:
 	// cpu_cores (KVM Specific)
@@ -13,6 +13,6 @@ type Workers struct {
 func DefaultWorkers() Workers {
 	return Workers{
 		CountPerCluster: DefaultCountPerCluster(),
-		VMSize:    DefaultVMSize(),
+		VMSize:          DefaultVMSize(),
 	}
 }

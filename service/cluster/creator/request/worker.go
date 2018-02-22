@@ -2,6 +2,7 @@ package request
 
 import (
 	"github.com/giantswarm/clusterclient/service/cluster/creator/request/aws"
+	"github.com/giantswarm/clusterclient/service/cluster/creator/request/azure"
 )
 
 // Worker configures the Kubernetes worker nodes.
@@ -11,6 +12,7 @@ type Worker struct {
 	Memory  Memory            `json:"memory"`
 	Storage Storage           `json:"storage"`
 	AWS     aws.Worker        `json:"aws"`
+	Azure   azure.Worker      `json:"azure"`
 }
 
 // DefaultWorker provides a default worker configuration by best effort.
@@ -21,5 +23,6 @@ func DefaultWorker() Worker {
 		Memory:  DefaultMemory(),
 		Storage: DefaultStorage(),
 		AWS:     aws.DefaultWorker(),
+		Azure:   azure.DefaultWorker(),
 	}
 }

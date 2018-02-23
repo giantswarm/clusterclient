@@ -23,6 +23,5 @@ func DefaultWorker() Worker {
 		Memory:  DefaultMemory(),
 		Storage: DefaultStorage(),
 		AWS:     aws.DefaultWorker(),
-		Azure:   azure.DefaultWorker(),
 	}
 }

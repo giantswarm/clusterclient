@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/giantswarm/clusterclient/service/cluster/updater/config/aws"
+	"github.com/giantswarm/clusterclient/service/cluster/updater/config/azure"
 )
 
 // Worker configures the Kubernetes worker nodes.
@@ -11,6 +12,7 @@ type Worker struct {
 	Memory  Memory            `json:"memory"`
 	Storage Storage           `json:"storage"`
 	AWS     aws.Worker        `json:"aws"`
+	Azure   azure.Worker      `json:"azure"`
 }
 
 // DefaultWorker provides a default worker configuration by best effort.

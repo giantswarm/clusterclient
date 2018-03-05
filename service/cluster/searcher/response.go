@@ -34,7 +34,7 @@ func DefaultResponse() *Response {
 		CreateDate:        time.Time{},
 		ID:                "",
 		KubernetesVersion: "",
-		KVM:               kvm.DefaultCluster(),
+		KVM:               kvm.Cluster{},
 		Masters:           []response.Master{},
 		Name:              "",
 		Owner:             "",

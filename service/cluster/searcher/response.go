@@ -7,6 +7,7 @@ import (
 
 	"github.com/giantswarm/clusterclient/service/cluster/searcher/response"
 	"github.com/giantswarm/clusterclient/service/cluster/searcher/response/aws"
+	"github.com/giantswarm/clusterclient/service/cluster/searcher/response/kvm"
 )
 
 // Response is the return value of the service action.
@@ -16,6 +17,7 @@ type Response struct {
 	CreateDate        time.Time              `json:"create_date"`
 	ID                string                 `json:"id"`
 	KubernetesVersion string                 `json:"kubernetes_version,omitempty"`
+	KVM               kvm.Cluster            `json:"kvm,omitempty"`
 	Masters           []response.Master      `json:"masters,omitempty"`
 	Name              string                 `json:"name,omitempty"`
 	Owner             string                 `json:"owner,omitempty"`
@@ -32,6 +34,7 @@ func DefaultResponse() *Response {
 		CreateDate:        time.Time{},
 		ID:                "",
 		KubernetesVersion: "",
+		KVM:               kvm.DefaultCluster(),
 		Masters:           []response.Master{},
 		Name:              "",
 		Owner:             "",

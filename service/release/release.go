@@ -9,6 +9,7 @@ import (
 
 	"github.com/giantswarm/clusterclient/service/release/lister"
 	"github.com/giantswarm/clusterclient/service/release/searcher"
+	"github.com/giantswarm/clusterclient/service/release/validator"
 )
 
 type Config struct {
@@ -28,8 +29,9 @@ func DefaultConfig() Config {
 }
 
 type Release struct {
-	Lister   *lister.Lister
-	Searcher *searcher.Searcher
+	Lister    *lister.Lister
+	Searcher  *searcher.Searcher
+	Validator *validator.Validator
 }
 
 func New(config Config) (*Release, error) {
@@ -65,9 +67,25 @@ func New(config Config) (*Release, error) {
 		}
 	}
 
+	var newValidator *validator.Validator
+	{
+		c := validator.Config{
+			Logger:     config.Logger,
+			RestClient: config.RestClient,
+
+			URL: config.URL,
+		}
+
+		newValidator, err = validator.New(c)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
 	r := &Release{
-		Lister:   newLister,
-		Searcher: newSearcher,
+		Lister:    newLister,
+		Searcher:  newSearcher,
+		Validator: newValidator,
 	}
 
 	return r, nil

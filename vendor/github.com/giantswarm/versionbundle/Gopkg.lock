@@ -2,22 +2,10 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/beorn7/perks"
-  packages = ["quantile"]
-  revision = "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9"
-
-[[projects]]
   name = "github.com/coreos/go-semver"
   packages = ["semver"]
   revision = "8ab6407b697782a06568d4b7f1db25550ec2e4c6"
   version = "v0.2.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/giantswarm/microclient"
-  packages = ["."]
-  revision = "134ab85d089df43c8b4a397fb81b76f7f3a6f44d"
 
 [[projects]]
   branch = "master"
@@ -30,15 +18,10 @@
   name = "github.com/giantswarm/micrologger"
   packages = [
     ".",
-    "loggermeta"
+    "loggermeta",
+    "microloggertest"
   ]
   revision = "2aaea11da0707ebb7f9fbabb07028a37b00efc16"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/giantswarm/versionbundle"
-  packages = ["."]
-  revision = "f1ba953de318d1c02fd88b21e2e9fa127b7beaba"
 
 [[projects]]
   name = "github.com/go-kit/kit"
@@ -55,20 +38,14 @@
 [[projects]]
   name = "github.com/go-resty/resty"
   packages = ["."]
-  revision = "65798e030a35b911602b4d1d743d6f50ac93b665"
-  version = "v1.3"
+  revision = "9ac9c42358f7c3c69ac9f8610e8790d7c338e85d"
+  version = "v1.0"
 
 [[projects]]
   name = "github.com/go-stack/stack"
   packages = ["."]
   revision = "259ab82a6cad3992b4e21ff5cac294ccb06474bc"
   version = "v1.7.0"
-
-[[projects]]
-  name = "github.com/golang/protobuf"
-  packages = ["proto"]
-  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
-  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -83,59 +60,28 @@
   revision = "b84e30acd515aadc4b783ad4ff83aff3299bdfe0"
 
 [[projects]]
-  name = "github.com/matttproud/golang_protobuf_extensions"
-  packages = ["pbutil"]
-  revision = "3247c84500bff8d9fb6d579d800f20b3e091582c"
-  version = "v1.0.0"
-
-[[projects]]
   branch = "master"
-  name = "github.com/prometheus/client_golang"
-  packages = ["prometheus"]
-  revision = "c3324c1198cf3374996e9d3098edd46a6b55afc9"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/prometheus/client_model"
-  packages = ["go"]
-  revision = "99fa1f4be8e564e8a6b613da7fa6f46c9edafc6c"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/prometheus/common"
+  name = "github.com/kylelemons/godebug"
   packages = [
-    "expfmt",
-    "internal/bitbucket.org/ww/goautoneg",
-    "model"
+    "diff",
+    "pretty"
   ]
-  revision = "e4aa40a9169a88835b849a6efb71e05dc04b88f0"
+  revision = "d65d576e9348f5982d7f6d83682b694e731a45c6"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/prometheus/procfs"
-  packages = [
-    ".",
-    "internal/util",
-    "nfs",
-    "xfs"
-  ]
-  revision = "54d17b57dd7d4a3aa092476596b3f8a933bde349"
-
-[[projects]]
-  branch = "master"
   name = "golang.org/x/net"
   packages = [
     "context",
     "idna",
     "publicsuffix"
   ]
-  revision = "ae89d30ce0c63142b652837da33d782e2b0a9b25"
+  revision = "1c05540f6879653db88113bc4a2b70aec4bd491f"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sync"
   packages = ["errgroup"]
-  revision = "fd80eb99c8f653c847d294a001bdf2a3a6f768f5"
+  revision = "1d60e4601c6fd243af51cc01ddf169918a5407ca"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -161,6 +107,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f7ec7c903e7757d8d8bcc8d39401a7f3c459fd7dce074bf500cedea0396f13fb"
+  inputs-digest = "0cb190680f8a8e3cacb299d44b8882f0d125e8f7a35415c918069b63835a69be"
   solver-name = "gps-cdcl"
   solver-version = 1

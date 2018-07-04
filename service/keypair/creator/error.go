@@ -10,3 +10,10 @@ var invalidConfigError = microerror.New("invalid config")
 func IsInvalidConfig(err error) bool {
 	return microerror.Cause(err) == invalidConfigError
 }
+
+var invalidRequestError = microerror.New("invalid request")
+
+// IsInvalidRequest asserts invalidRequestError.
+func IsInvalidRequest(err error) bool {
+	return microerror.Cause(err) == invalidRequestError
+}

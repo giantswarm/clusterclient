@@ -84,10 +84,9 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 	}
 	s.logger.Log("debug", fmt.Sprintf("received status code %d", r.StatusCode()), "service", Name)
 
-	if r.StatusCode() != 200 {
-		if r.StatusCode() == http.StatusBadRequest {
-			return nil, microerror.Mask(invalidRequestError)
-		}
+	if r.StatusCode() == http.StatusBadRequest {
+		return nil, microerror.Mask(invalidRequestError)
+	} else if r.StatusCode() != 200 {
 		return nil, microerror.Mask(fmt.Errorf(string(r.Body())))
 	}
 

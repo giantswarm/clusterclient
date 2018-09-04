@@ -12,34 +12,32 @@ import (
 
 // Response is the return value of the service action.
 type Response struct {
-	APIEndpoint       string                 `json:"api_endpoint"`
-	AWS               aws.Cluster            `json:"aws,omitempty"`
-	CreateDate        time.Time              `json:"create_date"`
-	ID                string                 `json:"id"`
-	KubernetesVersion string                 `json:"kubernetes_version,omitempty"`
-	KVM               kvm.Cluster            `json:"kvm,omitempty"`
-	Masters           []response.Master      `json:"masters,omitempty"`
-	Name              string                 `json:"name,omitempty"`
-	Owner             string                 `json:"owner,omitempty"`
-	ReleaseVersion    string                 `json:"release_version,omitempty"`
-	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`
-	Workers           []response.Worker      `json:"workers,omitempty"`
+	APIEndpoint    string                 `json:"api_endpoint"`
+	AWS            aws.Cluster            `json:"aws,omitempty"`
+	CreateDate     time.Time              `json:"create_date"`
+	ID             string                 `json:"id"`
+	KVM            kvm.Cluster            `json:"kvm,omitempty"`
+	Masters        []response.Master      `json:"masters,omitempty"`
+	Name           string                 `json:"name,omitempty"`
+	Owner          string                 `json:"owner,omitempty"`
+	ReleaseVersion string                 `json:"release_version,omitempty"`
+	VersionBundles []versionbundle.Bundle `json:"version_bundles,omitempty"`
+	Workers        []response.Worker      `json:"workers,omitempty"`
 }
 
 // DefaultResponse provides a default response by best effort.
 func DefaultResponse() *Response {
 	return &Response{
-		APIEndpoint:       "",
-		AWS:               aws.DefaultCluster(),
-		CreateDate:        time.Time{},
-		ID:                "",
-		KubernetesVersion: "",
-		KVM:               kvm.Cluster{},
-		Masters:           []response.Master{},
-		Name:              "",
-		Owner:             "",
-		ReleaseVersion:    "",
-		VersionBundles:    []versionbundle.Bundle{},
-		Workers:           []response.Worker{},
+		APIEndpoint:    "",
+		AWS:            aws.DefaultCluster(),
+		CreateDate:     time.Time{},
+		ID:             "",
+		KVM:            kvm.Cluster{},
+		Masters:        []response.Master{},
+		Name:           "",
+		Owner:          "",
+		ReleaseVersion: "",
+		VersionBundles: []versionbundle.Bundle{},
+		Workers:        []response.Worker{},
 	}
 }

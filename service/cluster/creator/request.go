@@ -10,7 +10,6 @@ import (
 type Request struct {
 	AWS            aws.Cluster            `json:"aws,omitempty"`
 	ID             string                 `json:"id,omitempty"`
-	Masters        []request.Master       `json:"masters,omitempty"`
 	Name           string                 `json:"name,omitempty"`
 	Owner          string                 `json:"owner,omitempty"`
 	ReleaseVersion string                 `json:"release_version,omitempty"`
@@ -23,7 +22,6 @@ func DefaultRequest() Request {
 	return Request{
 		AWS:            aws.DefaultCluster(),
 		ID:             "",
-		Masters:        []request.Master{},
 		Name:           "",
 		Owner:          "",
 		ReleaseVersion: "",

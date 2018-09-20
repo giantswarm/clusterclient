@@ -9,6 +9,7 @@ import (
 // Request is the configuration for the service action.
 type Request struct {
 	AWS            aws.Cluster            `json:"aws,omitempty"`
+	ID             string                 `json:"id,omitempty"`
 	Name           string                 `json:"name,omitempty"`
 	Owner          string                 `json:"owner,omitempty"`
 	ReleaseVersion string                 `json:"release_version,omitempty"`
@@ -20,6 +21,7 @@ type Request struct {
 func DefaultRequest() Request {
 	return Request{
 		AWS:            aws.DefaultCluster(),
+		ID:             "",
 		Name:           "",
 		Owner:          "",
 		ReleaseVersion: "",

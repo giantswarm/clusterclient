@@ -17,6 +17,7 @@ type Response struct {
 	CreateDate     time.Time              `json:"create_date"`
 	ID             string                 `json:"id"`
 	KVM            kvm.Cluster            `json:"kvm,omitempty"`
+	Masters        []response.Master      `json:"masters,omitempty"`
 	Name           string                 `json:"name,omitempty"`
 	Owner          string                 `json:"owner,omitempty"`
 	ReleaseVersion string                 `json:"release_version,omitempty"`
@@ -32,6 +33,7 @@ func DefaultResponse() *Response {
 		CreateDate:     time.Time{},
 		ID:             "",
 		KVM:            kvm.Cluster{},
+		Masters:        []response.Master{},
 		Name:           "",
 		Owner:          "",
 		ReleaseVersion: "",

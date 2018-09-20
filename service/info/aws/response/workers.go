@@ -7,13 +7,12 @@ type Workers struct {
 	// To be implemented:
 	// cpu_cores (KVM Specific)
 	// ram_size_gb (KVM Specific)
-	Volumes Volumes
+	// storage_size_gb (KVM Specific)
 }
 
 func DefaultWorkers() Workers {
 	return Workers{
 		CountPerCluster: DefaultCountPerCluster(),
 		InstanceType:    DefaultInstanceType(),
-		Volumes:         DefaultVolumes(),
 	}
 }

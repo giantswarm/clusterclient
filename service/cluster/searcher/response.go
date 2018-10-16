@@ -23,6 +23,7 @@ type Response struct {
 	ReleaseVersion string                 `json:"release_version,omitempty"`
 	VersionBundles []versionbundle.Bundle `json:"version_bundles,omitempty"`
 	Workers        []response.Worker      `json:"workers,omitempty"`
+	CredentialID   string                 `json:"credential_id"`
 }
 
 // DefaultResponse provides a default response by best effort.
@@ -39,5 +40,6 @@ func DefaultResponse() *Response {
 		ReleaseVersion: "",
 		VersionBundles: []versionbundle.Bundle{},
 		Workers:        []response.Worker{},
+		CredentialID:   "",
 	}
 }

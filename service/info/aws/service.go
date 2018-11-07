@@ -78,7 +78,7 @@ func (s *Service) Info(ctx context.Context) (*Response, error) {
 	}
 
 	s.logger.Log("debug", fmt.Sprintf("sending GET request to %s", u.String()), "service", Name)
-	r, err := microclient.Do(ctx, s.restClient.R().SetResult(DefaultResponse()).Get, u.String())
+	r, err := microclient.Do(ctx, s.restClient.R().SetResult(Response{}).Get, u.String())
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}

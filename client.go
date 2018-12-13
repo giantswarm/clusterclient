@@ -24,17 +24,6 @@ type Config struct {
 	Address string
 }
 
-// DefaultConfig provides a default configuration to create a new client
-// by best effort.
-func DefaultConfig() Config {
-	return Config{
-		Logger:     nil,
-		RestClient: nil,
-
-		Address: "",
-	}
-}
-
 type Client struct {
 	Cluster *cluster.Service
 	Info    *info.Service
@@ -45,7 +34,7 @@ type Client struct {
 
 func New(config Config) (*Client, error) {
 	if config.Address == "" {
-		return nil, microerror.Maskf(invalidConfigError, "config.Address must not be empty")
+		return nil, microerror.Maskf(invalidConfigError, "%T.Address must not be empty", config)
 	}
 
 	u, err := url.Parse(config.Address)
@@ -55,13 +44,13 @@ func New(config Config) (*Client, error) {
 
 	var clusterService *cluster.Service
 	{
-		clusterConfig := cluster.DefaultConfig()
+		c := cluster.Config{
+			Logger:     config.Logger,
+			RestClient: config.RestClient,
+			URL:        u,
+		}
 
-		clusterConfig.Logger = config.Logger
-		clusterConfig.RestClient = config.RestClient
-		clusterConfig.URL = u
-
-		clusterService, err = cluster.New(clusterConfig)
+		clusterService, err = cluster.New(c)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
@@ -123,7 +112,7 @@ func New(config Config) (*Client, error) {
 		}
 	}
 
-	newClient := &Client{
+	c := &Client{
 		Cluster: clusterService,
 		Info:    infoService,
 		KeyPair: keypairService,
@@ -131,5 +120,5 @@ func New(config Config) (*Client, error) {
 		Root:    rootService,
 	}
 
-	return newClient, nil
+	return c, nil
 }

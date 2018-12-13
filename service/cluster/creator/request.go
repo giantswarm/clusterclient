@@ -15,21 +15,7 @@ type Request struct {
 	Name              string                 `json:"name,omitempty"`
 	Owner             string                 `json:"owner,omitempty"`
 	ReleaseVersion    string                 `json:"release_version,omitempty"`
+	Scaling           request.Scaling        `json:"scaling,omitempty"`
 	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`
 	Workers           []request.Worker       `json:"workers,omitempty"`
-}
-
-// DefaultRequest provides a default request object by best effort.
-func DefaultRequest() Request {
-	return Request{
-		AvailabilityZones: 0,
-		AWS:               aws.DefaultCluster(),
-		ID:                "",
-		Masters:           []request.Master{},
-		Name:              "",
-		Owner:             "",
-		ReleaseVersion:    "",
-		VersionBundles:    []versionbundle.Bundle{},
-		Workers:           []request.Worker{},
-	}
 }

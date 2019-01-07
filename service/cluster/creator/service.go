@@ -33,17 +33,6 @@ type Config struct {
 	URL *url.URL
 }
 
-// DefaultConfig provides a default configuration to create a new creator
-// service by best effort.
-func DefaultConfig() Config {
-	return Config{
-		Logger:     nil,
-		RestClient: nil,
-
-		URL: nil,
-	}
-}
-
 type Service struct {
 	logger     micrologger.Logger
 	restClient *resty.Client
@@ -66,14 +55,14 @@ func New(config Config) (*Service, error) {
 		return nil, microerror.Maskf(invalidConfigError, "config.URL must not be empty")
 	}
 
-	newService := &Service{
+	s := &Service{
 		logger:     config.Logger,
 		restClient: config.RestClient,
 
 		url: config.URL,
 	}
 
-	return newService, nil
+	return s, nil
 }
 
 func (s *Service) Create(ctx context.Context, request Request) (*Response, error) {

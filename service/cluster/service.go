@@ -22,15 +22,12 @@ type Config struct {
 	URL *url.URL
 }
 
-// DefaultConfig provides a default configuration to create a new service by
-// best effort.
-func DefaultConfig() Config {
-	return Config{
-		Logger:     nil,
-		RestClient: nil,
-
-		URL: nil,
-	}
+type Service struct {
+	Creator  *creator.Service
+	Deleter  *deleter.Service
+	Lister   *lister.Service
+	Searcher *searcher.Service
+	Updater  *updater.Service
 }
 
 // New creates a new configured service object.
@@ -39,13 +36,13 @@ func New(config Config) (*Service, error) {
 
 	var creatorService *creator.Service
 	{
-		creatorConfig := creator.DefaultConfig()
+		c := creator.Config{
+			Logger:     config.Logger,
+			RestClient: config.RestClient,
+			URL:        config.URL,
+		}
 
-		creatorConfig.Logger = config.Logger
-		creatorConfig.RestClient = config.RestClient
-		creatorConfig.URL = config.URL
-
-		creatorService, err = creator.New(creatorConfig)
+		creatorService, err = creator.New(c)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
@@ -116,12 +113,4 @@ func New(config Config) (*Service, error) {
 	}
 
 	return newService, nil
-}
-
-type Service struct {
-	Creator  *creator.Service
-	Deleter  *deleter.Service
-	Lister   *lister.Service
-	Searcher *searcher.Service
-	Updater  *updater.Service
 }

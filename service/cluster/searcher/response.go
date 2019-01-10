@@ -22,6 +22,7 @@ type Response struct {
 	Name              string                 `json:"name,omitempty"`
 	Owner             string                 `json:"owner,omitempty"`
 	ReleaseVersion    string                 `json:"release_version,omitempty"`
+	Scaling           response.Scaling       `json:"scaling,omitempty"`
 	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`
 	Workers           []response.Worker      `json:"workers,omitempty"`
 	CredentialID      string                 `json:"credential_id"`
@@ -40,6 +41,7 @@ func DefaultResponse() *Response {
 		Name:              "",
 		Owner:             "",
 		ReleaseVersion:    "",
+		Scaling:           response.Scaling{},
 		VersionBundles:    []versionbundle.Bundle{},
 		Workers:           []response.Worker{},
 		CredentialID:      "",

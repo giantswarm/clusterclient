@@ -7,6 +7,7 @@ type Patch struct {
 	Name           string                 `json:"name"`
 	Owner          string                 `json:"owner"`
 	ReleaseVersion string                 `json:"release_version,omitempty"`
+	Scaling        Scaling                `json:"scaling,omitempty"`
 	VersionBundles []versionbundle.Bundle `json:"version_bundles,omitempty"`
 	Workers        []Worker               `json:"workers,omitempty"`
 }
@@ -17,6 +18,7 @@ func DefaultPatch() Patch {
 		Name:           "",
 		Owner:          "",
 		ReleaseVersion: "",
+		Scaling:        Scaling{},
 		VersionBundles: []versionbundle.Bundle{},
 		Workers:        []Worker{},
 	}

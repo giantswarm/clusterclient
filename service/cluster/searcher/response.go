@@ -21,6 +21,7 @@ type Response struct {
 	Masters           []response.Master      `json:"masters,omitempty"`
 	Name              string                 `json:"name,omitempty"`
 	Owner             string                 `json:"owner,omitempty"`
+	Region            string                 `json:"region,omitempty"`
 	ReleaseVersion    string                 `json:"release_version,omitempty"`
 	Scaling           response.Scaling       `json:"scaling,omitempty"`
 	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`
@@ -40,6 +41,7 @@ func DefaultResponse() *Response {
 		Masters:           []response.Master{},
 		Name:              "",
 		Owner:             "",
+		Region:            "",
 		ReleaseVersion:    "",
 		Scaling:           response.Scaling{},
 		VersionBundles:    []versionbundle.Bundle{},

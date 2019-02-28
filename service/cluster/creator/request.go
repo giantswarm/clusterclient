@@ -14,6 +14,7 @@ type Request struct {
 	Masters           []request.Master       `json:"masters,omitempty"`
 	Name              string                 `json:"name,omitempty"`
 	Owner             string                 `json:"owner,omitempty"`
+	Region            string                 `json:"region,omitempty"`
 	ReleaseVersion    string                 `json:"release_version,omitempty"`
 	Scaling           request.Scaling        `json:"scaling,omitempty"`
 	VersionBundles    []versionbundle.Bundle `json:"version_bundles,omitempty"`

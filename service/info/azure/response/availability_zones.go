@@ -2,6 +2,6 @@ package response
 
 type AvailabilityZones struct {
 	DefaultCount int      `json:"default"`
-	Max     int      `json:"max"`
+	MaxCount     int      `json:"max"`
 	Zones   []int `json:"zones,omitempty"`
 }

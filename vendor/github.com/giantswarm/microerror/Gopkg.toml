@@ -1,3 +1,4 @@
+
 # Gopkg.toml example
 #
 # Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
@@ -22,24 +23,4 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/giantswarm/microclient"
-
-[[override]]
-  name = "github.com/giantswarm/microerror"
-  version = "=0.1.0"
-
-[[override]]
-  name = "github.com/giantswarm/micrologger"
-  version = "v0.1.0"
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/giantswarm/versionbundle"
-
-[[constraint]]
-  name = "gopkg.in/resty.v1"
-  version = "1.0.0"
-
-[prune]
-  go-tests = true
-  unused-packages = true
+  name = "github.com/juju/errgo"

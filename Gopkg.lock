@@ -18,12 +18,12 @@
   version = "v0.2.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:d36b8416dae93d8bd866dd958954b86cf28f5d62b2be18ac59fb5a0721b776ea"
+  digest = "1:b969cdfa942b15aca03281c4fa1d5141942ffa8ae137903d5aacd90cdcc9e85d"
   name = "github.com/giantswarm/microclient"
   packages = ["."]
   pruneopts = "UT"
-  revision = "459b479d046f262eadb1549a4789d04097bd8b23"
+  revision = "8bf1397a280805e81c263e13aaa755f7e4eebb5b"
+  version = "v0.1.0"
 
 [[projects]]
   digest = "1:701a5f5a7297ced0c7b9aeeba6a40ef47663b956d56e7acd09fe0d1c31eb1e4b"
@@ -34,23 +34,23 @@
   version = "v0.1.0"
 
 [[projects]]
-  digest = "1:2275349e37657984a6cfc425803962b3f46843532b37b7a4552c5356086dffc6"
+  digest = "1:20fe82d087077d505e906c36177da3edb09897430812a437adb1dac497dc4371"
   name = "github.com/giantswarm/micrologger"
   packages = [
     ".",
     "loggermeta",
   ]
   pruneopts = "UT"
-  revision = "c87486c7d20d7878ad57a09d379d7d59328b472e"
-  version = "v0.1.0"
+  revision = "c4d217562e3d493e3ff571707346a5a2653475cb"
+  version = "v0.1.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:e6227e79e59fea0321b7206823740cdebfd813ad52b5afec79c836385f91480a"
+  digest = "1:a7f066d94d62caeea24032011b3caa69efddd56ad62e6e401d8f8448c30239ec"
   name = "github.com/giantswarm/versionbundle"
   packages = ["."]
   pruneopts = "UT"
-  revision = "c6a9f18d7762cb6bcc244b6d78adfa1d1eb179f0"
+  revision = "778392a99b4b04d46a480fe21cbf4547d194600c"
+  version = "v0.1.0"
 
 [[projects]]
   digest = "1:0cfcded8689c2c964c223650009c5dd9e283c22d57f18f2335aafa16cc22acf1"
@@ -87,8 +87,8 @@
     "ptypes/timestamp",
   ]
   pruneopts = "UT"
-  revision = "5d5b4c10bd43f85e63bd9e4a3fa9b1ea2ef88af2"
-  version = "v1.3.4"
+  revision = "84668698ea25b64748563aa20726db66a6b8d299"
+  version = "v1.3.5"
 
 [[projects]]
   branch = "master"
@@ -166,7 +166,7 @@
   name = "golang.org/x/sync"
   packages = ["errgroup"]
   pruneopts = "UT"
-  revision = "cd5d95a43a6e21273425c7ae415d3df9ea832eeb"
+  revision = "43a5402ce75a95522677f77c619865d66b8c57ab"
 
 [[projects]]
   digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"

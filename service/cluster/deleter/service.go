@@ -6,11 +6,10 @@ import (
 	"net/http"
 	"net/url"
 
-	"gopkg.in/resty.v1"
-
 	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
+	resty "gopkg.in/resty.v1"
 )
 
 const (
@@ -77,7 +76,7 @@ func (s *Service) Delete(ctx context.Context, request Request) (*Response, error
 		return nil, microerror.Mask(err)
 	}
 
-	s.logger.Log("debug", fmt.Sprintf("sending DELETE request to %s", u.String()), "service", Name)
+	s.logger.Log("debug", fmt.Sprintf("sending DELETE request to %s", u.String()), "service", Name) // nolint:gosec
 	r, err := microclient.Do(ctx, s.restClient.R().SetResult(DefaultResponse()).Delete, u.String())
 	if err != nil {
 		return nil, microerror.Mask(err)

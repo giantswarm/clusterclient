@@ -1,9 +1,10 @@
 package creator
 
 import (
+	"github.com/giantswarm/versionbundle"
+
 	"github.com/giantswarm/clusterclient/service/cluster/creator/request"
 	"github.com/giantswarm/clusterclient/service/cluster/creator/request/aws"
-	"github.com/giantswarm/versionbundle"
 )
 
 // Request is the configuration for the service action.

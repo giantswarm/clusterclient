@@ -7,11 +7,10 @@ import (
 	"net/http"
 	"net/url"
 
-	"gopkg.in/resty.v1"
-
 	"github.com/giantswarm/microclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
+	resty "gopkg.in/resty.v1"
 
 	"github.com/giantswarm/clusterclient/service/cluster/searcher"
 )

@@ -21,3 +21,12 @@ var invalidRequestError = &microerror.Error{
 func IsInvalidRequest(err error) bool {
 	return microerror.Cause(err) == invalidRequestError
 }
+
+var serviceUnavailableError = &microerror.Error{
+	Kind: "serviceUnavailableError",
+}
+
+// IsServiceUnavailable asserts serviceUnavailableError.
+func IsServiceUnavailable(err error) bool {
+	return microerror.Cause(err) == serviceUnavailableError
+}

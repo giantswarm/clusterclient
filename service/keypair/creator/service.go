@@ -85,6 +85,8 @@ func (s *Service) Create(ctx context.Context, request Request) (*Response, error
 
 	if r.StatusCode() == http.StatusBadRequest {
 		return nil, microerror.Mask(invalidRequestError)
+	} else if r.StatusCode() == http.StatusServiceUnavailable {
+		return nil, microerror.Mask(serviceUnavailableError)
 	} else if r.StatusCode() != 200 {
 		return nil, microerror.Mask(fmt.Errorf(string(r.Body())))
 	}
